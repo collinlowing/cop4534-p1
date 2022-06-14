@@ -1,3 +1,22 @@
 # ninja log v5
-0	511	1655156966764967154	CMakeFiles/cop4534_p1.dir/main.cpp.o	8327caf7ded8e43
-512	649	1655156966901634517	cop4534_p1	8fb6767b1b106259
+1	332	1655165462577806963	Google_tests/CMakeFiles/Google_Tests_run.dir/__/main.cpp.o	aa147e1ee7797db0
+0	358	1655159042244435547	CMakeFiles/cop4534_p1.dir/Cipher.cpp.o	3003c64f6a7d5c28
+1	4952	1655162993798260112	Google_tests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	b1857c3d7af7cf5f
+0	88	1655162961148327970	cop4534_p1	d3eaf68f9d73815f
+0	45	1655162988898269855	Google_tests/CMakeFiles/Google_Tests_run.dir/sample1.cc.o	600bd126ba1c1e9
+4953	5108	1655162993948259816	lib/libgtest.a	bd46e283a73180de
+1	1105	1655161412443904805	CMakeFiles/cop4534_p1.dir/Google_tests/test2.cpp.o	441b1d1ecd087c48
+1	1124	1655162989978267695	Google_tests/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	b737bad3d1a58ade
+0	17	1655159121737918966	CMakeFiles/cop4534_p1.dir/HashTable.cpp.o	140802b89bd607c7
+0	17	1655159121737918966	CMakeFiles/cop4534_p1.dir/HashItem.cpp.o	e82182d9fe2694e5
+0	130	1655165630394797135	build.ninja	bc71ad6ff582c45b
+2	1166	1655162612692943319	CMakeFiles/cop4534_p1.dir/Google_tests/test1.cpp.o	8265ed89bff3a8e1
+1	222	1655165566684676593	Google_tests/Google_Tests_run	f10408d150ba989a
+0	372	1655159042257768905	CMakeFiles/cop4534_p1.dir/main.cpp.o	8327caf7ded8e43
+1	313	1655165309050824213	Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o	6add1b6d6d9b8949
+1	1253	1655162990104934109	Google_tests/CMakeFiles/Google_Tests_run.dir/sample1_unittest.cc.o	55f993eeafcffca5
+1	17	1655159121737918966	CMakeFiles/cop4534_p1.dir/Parser.cpp.o	a29c765bc315774e
+1	1033	1655164418441837780	Google_tests/CMakeFiles/Google_Tests_run.dir/test1.cpp.o	37f700dadf47739d
+5108	5146	1655162993998259718	lib/libgtest_main.a	8d46ef60383703
+1	966	1655165632871468437	Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o	e29c632690ee165f
+966	1144	1655165633048135435	Google_tests/Google_Tests_run	8c0a17ef9d282ab8

@@ -37,7 +37,7 @@ std::string Cipher::resize(std::string key, std::string message) {
             i = 0;
         if (resizedKey.length() == msgLength)
             break;
-        resizedKey.append(1,key[i]);
+        resizedKey.append(1, key[i]);
     }
     std::cout << resizedKey << std::endl;
     return resizedKey;

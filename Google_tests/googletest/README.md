@@ -7,7 +7,8 @@
 GoogleTest now follows the
 [Abseil Live at Head philosophy](https://abseil.io/about/philosophy#upgrade-support).
 We recommend
-[updating to the latest commit in the `main` branch as often as possible](https://github.com/abseil/abseil-cpp/blob/master/FAQ.md#what-is-live-at-head-and-how-do-i-do-it).
+[updating to the latest commit in the `main` branch as often as possible](https://github.com/abseil/abseil-cpp/blob/master/FAQ.md#what-is-live-at-head-and-how-do-i-do-it)
+.
 
 #### Documentation Updates
 
@@ -22,9 +23,9 @@ is now available.
 
 #### Coming Soon
 
-*   We are planning to take a dependency on
-    [Abseil](https://github.com/abseil/abseil-cpp).
-*   More documentation improvements are planned.
+* We are planning to take a dependency on
+  [Abseil](https://github.com/abseil/abseil-cpp).
+* More documentation improvements are planned.
 
 ## Welcome to **GoogleTest**, Google's C++ test framework!
 
@@ -43,16 +44,16 @@ More information about building GoogleTest can be found at
 
 ## Features
 
-*   An [xUnit](https://en.wikipedia.org/wiki/XUnit) test framework.
-*   Test discovery.
-*   A rich set of assertions.
-*   User-defined assertions.
-*   Death tests.
-*   Fatal and non-fatal failures.
-*   Value-parameterized tests.
-*   Type-parameterized tests.
-*   Various options for running the tests.
-*   XML test report generation.
+* An [xUnit](https://en.wikipedia.org/wiki/XUnit) test framework.
+* Test discovery.
+* A rich set of assertions.
+* User-defined assertions.
+* Death tests.
+* Fatal and non-fatal failures.
+* Value-parameterized tests.
+* Type-parameterized tests.
+* Various options for running the tests.
+* XML test report generation.
 
 ## Supported Platforms
 
@@ -70,22 +71,22 @@ Pull requests containing fixes are welcome!
 
 ### Operating Systems
 
-*   Linux
-*   macOS
-*   Windows
+* Linux
+* macOS
+* Windows
 
 ### Compilers
 
-*   gcc 5.0+
-*   clang 5.0+
-*   MSVC 2015+
+* gcc 5.0+
+* clang 5.0+
+* MSVC 2015+
 
 **macOS users:** Xcode 9.3+ provides clang 5.0+.
 
 ### Build Systems
 
-*   [Bazel](https://bazel.build/)
-*   [CMake](https://cmake.org/)
+* [Bazel](https://bazel.build/)
+* [CMake](https://cmake.org/)
 
 **Note:** Bazel is the build system used by the team internally and in tests.
 CMake is supported on a best-effort basis and by the community.
@@ -95,12 +96,12 @@ CMake is supported on a best-effort basis and by the community.
 In addition to many internal projects at Google, GoogleTest is also used by the
 following notable projects:
 
-*   The [Chromium projects](http://www.chromium.org/) (behind the Chrome browser
-    and Chrome OS).
-*   The [LLVM](http://llvm.org/) compiler.
-*   [Protocol Buffers](https://github.com/google/protobuf), Google's data
-    interchange format.
-*   The [OpenCV](http://opencv.org/) computer vision library.
+* The [Chromium projects](http://www.chromium.org/) (behind the Chrome browser
+  and Chrome OS).
+* The [LLVM](http://llvm.org/) compiler.
+* [Protocol Buffers](https://github.com/google/protobuf), Google's data
+  interchange format.
+* The [OpenCV](http://opencv.org/) computer vision library.
 
 ## Related Open Source Projects
 

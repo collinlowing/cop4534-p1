@@ -2,10 +2,11 @@
 
 #include "Cipher.hpp"
 
-int main()
-{
+int main() {
     Cipher cipher;
-    const char * key = cipher.getKey();
-	std::cout << "Hello World! " << key << std::endl;
-	return 0;
+    std::string key = cipher.getKey();
+    std::string message = "thisisamessage";
+    std::string resizedKey = cipher.resize(key, message);
+    std::cout << "Hello World! " << resizedKey << std::endl;
+    return 0;
 }

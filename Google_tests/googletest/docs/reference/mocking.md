@@ -138,13 +138,13 @@ one of the following, all defined in the `::testing` namespace:
 
 If the `Times` clause is omitted, GoogleTest infers the cardinality as follows:
 
-*   If neither [`WillOnce`](#EXPECT_CALL.WillOnce) nor
-    [`WillRepeatedly`](#EXPECT_CALL.WillRepeatedly) are specified, the inferred
-    cardinality is `Times(1)`.
-*   If there are *n* `WillOnce` clauses and no `WillRepeatedly` clause, where
-    *n* >= 1, the inferred cardinality is `Times(n)`.
-*   If there are *n* `WillOnce` clauses and one `WillRepeatedly` clause, where
-    *n* >= 0, the inferred cardinality is `Times(AtLeast(n))`.
+* If neither [`WillOnce`](#EXPECT_CALL.WillOnce) nor
+  [`WillRepeatedly`](#EXPECT_CALL.WillRepeatedly) are specified, the inferred
+  cardinality is `Times(1)`.
+* If there are *n* `WillOnce` clauses and no `WillRepeatedly` clause, where
+  *n* >= 1, the inferred cardinality is `Times(n)`.
+* If there are *n* `WillOnce` clauses and one `WillRepeatedly` clause, where
+  *n* >= 0, the inferred cardinality is `Times(AtLeast(n))`.
 
 The `Times` clause can be used at most once on an expectation.
 

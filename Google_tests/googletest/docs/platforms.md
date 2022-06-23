@@ -14,22 +14,22 @@ Pull requests containing fixes are welcome!
 
 ### Operating systems
 
-*   Linux
-*   macOS
-*   Windows
+* Linux
+* macOS
+* Windows
 
 ### Compilers
 
-*   gcc 5.0+
-*   clang 5.0+
-*   MSVC 2015+
+* gcc 5.0+
+* clang 5.0+
+* MSVC 2015+
 
 **macOS users:** Xcode 9.3+ provides clang 5.0+.
 
 ### Build systems
 
-*   [Bazel](https://bazel.build/)
-*   [CMake](https://cmake.org/)
+* [Bazel](https://bazel.build/)
+* [CMake](https://cmake.org/)
 
 Bazel is the build system used by the team internally and in tests. CMake is
 supported on a best-effort basis and by the community.

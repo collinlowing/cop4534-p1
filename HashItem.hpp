@@ -7,7 +7,21 @@
 
 
 class HashItem {
+private:
+    std::string userID;
+    std::string password;
+public:
+    HashItem();
 
+    HashItem(std::string userID, std::string password);
+
+    std::string getUserID();
+
+    void setUserID(std::string userID);
+
+    std::string getPassword();
+
+    void setPassword(std::string password);
 };
 
 

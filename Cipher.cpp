@@ -21,7 +21,24 @@ void Cipher::setKey(std::string key) {
 }
 
 std::string Cipher::encrypt(std::string message) {
-    return nullptr;
+    // resize encryption key to be same length as message
+    std::string resizedKey = resize(key, message);
+
+    //initialize encrypted message
+    std::string encryptedMsg = "";
+
+    // iterate through message
+    for (int i = 0, j = 0; i < message.size(); i++)
+    {
+        // get character from message
+        char c = message[i];
+
+        // translate character based on key
+        encryptedMsg += (c + resizedKey[j] - 2 * 'a') % 26 + 'a'; //added 'a' to convert to ASCII alphabet
+        j++;
+    }
+
+    return encryptedMsg;
 }
 
 std::string Cipher::resize(std::string key, std::string message) {
@@ -44,5 +61,22 @@ std::string Cipher::resize(std::string key, std::string message) {
 }
 
 std::string Cipher::decrypt(const std::string key, std::string message) {
-    return nullptr;
+    // resize encryption key to be same length as message
+    std::string resizedKey = resize(key, message);
+
+    //initialize decrypted message
+    std::string decryptedMsg = "";
+
+    // iterate through message
+    for (int i = 0, j = 0; i < message.size(); i++)
+    {
+        // get character from message
+        char c = message[i];
+
+        // translate character based on key
+        decryptedMsg += (c - resizedKey[j] + 26) % 26 + 'a'; //added 'a' to convert to ASCII alphabet
+        j++;
+    }
+
+    return decryptedMsg;
 }

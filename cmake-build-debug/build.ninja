@@ -173,40 +173,40 @@ build install/strip: phony CMakeFiles/install/strip.util
 #############################################
 # Order-only phony target for Google_Tests_run
 
-build cmake_object_order_depends_target_Google_Tests_run: phony || cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
+build cmake_object_order_depends_target_Google_Tests_run: phony || cmake_object_order_depends_target_gmock cmake_object_order_depends_target_gmock_main cmake_object_order_depends_target_gtest cmake_object_order_depends_target_gtest_main
 
 build Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Cipher.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o.d
   FLAGS = -g -std=gnu++14
-  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest"
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir/__
 
 build Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/StringNode.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o.d
   FLAGS = -g -std=gnu++14
-  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest"
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir/__
 
 build Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Google_tests/testCipher.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o.d
   FLAGS = -g -std=gnu++14
-  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest"
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
 
 build Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Google_tests/testHashTable.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o.d
   FLAGS = -g -std=gnu++14
-  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest"
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
 
 build Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Google_tests/testStringNode.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o.d
   FLAGS = -g -std=gnu++14
-  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest"
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
 
@@ -218,9 +218,9 @@ build Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o: CXX_COM
 #############################################
 # Link the executable Google_tests/Google_Tests_run
 
-build Google_tests/Google_Tests_run: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
+build Google_tests/Google_Tests_run: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgmock.a lib/libgmock_main.a lib/libgmock.a lib/libgtest.a || lib/libgmock.a lib/libgmock_main.a lib/libgtest.a lib/libgtest_main.a
   FLAGS = -g
-  LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgtest.a
+  LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgmock.a  lib/libgmock_main.a  lib/libgmock.a  lib/libgtest.a
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   POST_BUILD = :
   PRE_LINK = :

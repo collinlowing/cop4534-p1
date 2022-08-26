@@ -1,4 +1,4 @@
-# Install script for directory: /home/cel/Data Structures and Algorithms II/cop4534-p1
+# Install script for directory: /home/cel/CLionProjects/cop4534-p1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/cel/Data Structures and Algorithms II/cop4534-p1/cmake-build-debug/Google_tests/cmake_install.cmake")
+  include("/home/cel/CLionProjects/cop4534-p1/cmake-build-debug/Google_tests/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -55,5 +55,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/cel/Data Structures and Algorithms II/cop4534-p1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/cel/CLionProjects/cop4534-p1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -29,11 +29,3 @@ TEST(StringNodeTests, nextPointer) {
     EXPECT_EQ(node.getNext(), nextPtr);
     delete nextPtr;
 }
-
-// make hash key
-TEST(StringNodeTests, hash) {
-    std::size_t expectedResult = 1746176491;
-    StringNode node("collin", "password");
-    int hash = node.hash();
-    EXPECT_EQ(hash, expectedResult);
-}

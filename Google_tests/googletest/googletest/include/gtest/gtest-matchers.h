@@ -63,15 +63,15 @@ GTEST_DISABLE_MSC_WARNINGS_PUSH_(
 
 namespace testing {
 
-// To implement a matcher Foo for type T, define:
+// To implement a matcher Foo for type Type, define:
 //   1. a class FooMatcherMatcher that implements the matcher interface:
 //     using is_gtest_matcher = void;
-//     bool MatchAndExplain(const T&, std::ostream*);
+//     bool MatchAndExplain(const Type&, std::ostream*);
 //       (MatchResultListener* can also be used instead of std::ostream*)
 //     void DescribeTo(std::ostream*);
 //     void DescribeNegationTo(std::ostream*);
 //
-//   2. a factory function that creates a Matcher<T> object from a
+//   2. a factory function that creates a Matcher<Type> object from a
 //      FooMatcherMatcher.
 
 class MatchResultListener {
@@ -257,8 +257,8 @@ struct SharedPayload : SharedPayloadBase {
   T value;
 };
 
-// An internal class for implementing Matcher<T>, which will derive
-// from it.  We put functionalities common to all Matcher<T>
+// An internal class for implementing Matcher<Type>, which will derive
+// from it.  We put functionalities common to all Matcher<Type>
 // specializations here to avoid code duplication.
 template <typename T>
 class MatcherBase : private MatcherDescriberInterface {
@@ -491,10 +491,10 @@ class MatcherBase : private MatcherDescriberInterface {
 
 }  // namespace internal
 
-// A Matcher<T> is a copyable and IMMUTABLE (except by assignment)
-// object that can check whether a value of type T matches.  The
-// implementation of Matcher<T> is just a std::shared_ptr to const
-// MatcherInterface<T>.  Don't inherit from Matcher!
+// A Matcher<Type> is a copyable and IMMUTABLE (except by assignment)
+// object that can check whether a value of type Type matches.  The
+// implementation of Matcher<Type> is just a std::shared_ptr to const
+// MatcherInterface<Type>.  Don't inherit from Matcher!
 template <typename T>
 class Matcher : public internal::MatcherBase<T> {
  public:
@@ -692,7 +692,7 @@ class PolymorphicMatcher {
 
 // Creates a matcher from its implementation.
 // DEPRECATED: Especially in the generic code, prefer:
-//   Matcher<T>(new MyMatcherImpl<const T&>(...));
+//   Matcher<Type>(new MyMatcherImpl<const Type&>(...));
 //
 // MakeMatcher may create a Matcher that accepts its argument by value, which
 // leads to unnecessary copies & lack of support for non-copyable types.
@@ -723,7 +723,7 @@ namespace internal {
 // a template type conversion operator in the implementation.
 //
 // The following template definition assumes that the Rhs parameter is
-// a "bare" type (i.e. neither 'const T' nor 'T&').
+// a "bare" type (i.e. neither 'const Type' nor 'Type&').
 template <typename D, typename Rhs, typename Op>
 class ComparisonBase {
  public:
@@ -811,8 +811,8 @@ template <typename T, typename = typename std::enable_if<
 using StringLike = T;
 
 // Implements polymorphic matchers MatchesRegex(regex) and
-// ContainsRegex(regex), which can be used as a Matcher<T> as long as
-// T can be converted to a string.
+// ContainsRegex(regex), which can be used as a Matcher<Type> as long as
+// Type can be converted to a string.
 class MatchesRegexMatcher {
  public:
   MatchesRegexMatcher(const RE* regex, bool full_match)
@@ -889,14 +889,14 @@ PolymorphicMatcher<internal::MatchesRegexMatcher> ContainsRegex(
 }
 
 // Creates a polymorphic matcher that matches anything equal to x.
-// Note: if the parameter of Eq() were declared as const T&, Eq("foo")
+// Note: if the parameter of Eq() were declared as const Type&, Eq("foo")
 // wouldn't compile.
 template <typename T>
 inline internal::EqMatcher<T> Eq(T x) {
   return internal::EqMatcher<T>(x);
 }
 
-// Constructs a Matcher<T> from a 'value' of type T.  The constructed
+// Constructs a Matcher<Type> from a 'value' of type Type.  The constructed
 // matcher matches any value that's equal to 'value'.
 template <typename T>
 Matcher<T>::Matcher(T value) {
@@ -907,13 +907,13 @@ Matcher<T>::Matcher(T value) {
 // and equal to rhs.  A user may need to use this instead of Eq(...)
 // in order to resolve an overloading ambiguity.
 //
-// TypedEq<T>(x) is just a convenient short-hand for Matcher<T>(Eq(x))
-// or Matcher<T>(x), but more readable than the latter.
+// TypedEq<Type>(x) is just a convenient short-hand for Matcher<Type>(Eq(x))
+// or Matcher<Type>(x), but more readable than the latter.
 //
 // We could define similar monomorphic matchers for other comparison
 // operations (e.g. TypedLt, TypedGe, and etc), but decided not to do
 // it yet as those are used much less than Eq() in practice.  A user
-// can always write Matcher<T>(Lt(5)) to be explicit about the type,
+// can always write Matcher<Type>(Lt(5)) to be explicit about the type,
 // for example.
 template <typename Lhs, typename Rhs>
 inline Matcher<Lhs> TypedEq(const Rhs& rhs) {

@@ -115,7 +115,7 @@ namespace testing {
             kBool, kInteger, kFloatingPoint, kOther
         };
 
-// KindOf<T>::value is the kind of type T.
+// KindOf<Type>::value is the kind of type Type.
         template<typename T>
         struct KindOf {
             enum {
@@ -312,9 +312,9 @@ namespace testing {
 #pragma warning(disable : 4717)
 #endif
 
-// Invalid<T>() is usable as an expression of type T, but will terminate
+// Invalid<Type>() is usable as an expression of type Type, but will terminate
 // the program with an assertion failure if actually run.  This is useful
-// when a value of type T is needed for compilation, but the statement
+// when a value of type Type is needed for compilation, but the statement
 // will not really be executed (or we don't care if the statement
 // crashes).
         template<typename T>
@@ -325,7 +325,7 @@ namespace testing {
 #elif defined(_MSC_VER)
             __assume(0);
 #else
-            return Invalid<T>();
+            return Invalid<Type>();
 #endif
         }
 
@@ -370,7 +370,7 @@ namespace testing {
         public:
             typedef typename std::remove_const<Element>::type RawElement;
             typedef internal::NativeArray<RawElement> type;
-            // NativeArray<T> can represent a native array either by value or by
+            // NativeArray<Type> can represent a native array either by value or by
             // reference (selected by a constructor argument), so 'const type'
             // can be used to reference a const native array.  We cannot
             // 'typedef const type& const_reference' here, as that would mean
@@ -423,7 +423,7 @@ namespace testing {
             typedef T type;
         };
 
-// Partially specialized to remove constness from std::pair<const K, V>.
+// Partially specialized to remove constness from std::pair<const Key, V>.
         template<typename K, typename V>
         struct RemoveConstFromKey<std::pair<const K, V> > {
             typedef std::pair<K, V> type;

@@ -7,13 +7,12 @@
 
 
 #include <string>
-#include "HashNode.hpp"
 
-class StringNode: public HashNode {
+class StringNode {
 private:
     std::string data;
     std::string key;
-    StringNode* next;
+    StringNode* next = nullptr;
 public:
     StringNode();
     StringNode(std::string data, std::string key);  // parameters for initial values
@@ -21,7 +20,6 @@ public:
     std::string getKey();
     StringNode* getNext();
     void setNext(StringNode* next);
-    std::size_t hash() override;    // override abstract hash() function
 };
 
 

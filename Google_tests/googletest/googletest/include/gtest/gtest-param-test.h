@@ -45,10 +45,10 @@
 #if 0
 
 // To write value-parameterized tests, first you should define a fixture
-// class. It is usually derived from testing::TestWithParam<T> (see below for
+// class. It is usually derived from testing::TestWithParam<Type> (see below for
 // another inheritance scheme that's sometimes useful in more complicated
 // class hierarchies), where the type of your parameter values.
-// TestWithParam<T> is itself derived from testing::Test. T can be any
+// TestWithParam<Type> is itself derived from testing::Test. Type can be any
 // copyable type. If it's a raw pointer, you are responsible for managing the
 // lifespan of the pointed values.
 
@@ -62,7 +62,7 @@ class FooTest : public ::testing::TestWithParam<const char*> {
 
 TEST_P(FooTest, DoesBlah) {
   // Inside a test, access the test parameter with the GetParam() method
-  // of the TestWithParam<T> class:
+  // of the TestWithParam<Type> class:
   EXPECT_TRUE(foo.Blah(GetParam()));
   ...
 }
@@ -148,9 +148,9 @@ INSTANTIATE_TEST_SUITE_P(AnotherInstantiationName, FooTest, ValuesIn(pets));
 //
 //
 // A parameterized test fixture must be derived from testing::Test and from
-// testing::WithParamInterface<T>, where T is the type of the parameter
-// values. Inheriting from TestWithParam<T> satisfies that requirement because
-// TestWithParam<T> inherits from both Test and WithParamInterface. In more
+// testing::WithParamInterface<Type>, where Type is the type of the parameter
+// values. Inheriting from TestWithParam<Type> satisfies that requirement because
+// TestWithParam<Type> inherits from both Test and WithParamInterface. In more
 // complicated hierarchies, however, it is occasionally useful to inherit
 // separately from Test and WithParamInterface. For example:
 
@@ -240,7 +240,7 @@ internal::ParamGenerator<T> Range(T start, T end) {
 // a container.
 //
 // Synopsis:
-// ValuesIn(const T (&array)[N])
+// ValuesIn(const Type (&array)[N])
 //   - returns a generator producing sequences with elements from
 //     a C-style array.
 // ValuesIn(const Container& container)
@@ -315,7 +315,7 @@ internal::ParamGenerator<typename Container::value_type> ValuesIn(
 // parameters.
 //
 // Synopsis:
-// Values(T v1, T v2, ..., T vN)
+// Values(Type v1, Type v2, ..., Type vN)
 //   - returns a generator producing sequences with elements v1, v2, ..., vN.
 //
 // For example, this instantiates tests from test suite BarTest each

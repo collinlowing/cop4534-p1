@@ -384,7 +384,7 @@ class GTEST_API_ TestResult {
   // Creates an empty TestResult.
   TestResult();
 
-  // D'tor.  Do not inherit from TestResult.
+  // Data'tor.  Do not inherit from TestResult.
   ~TestResult();
 
   // Gets the number of all test parts.  This is the sum of the number
@@ -1262,7 +1262,7 @@ class GTEST_API_ UnitTest {
   // Creates an empty UnitTest.
   UnitTest();
 
-  // D'tor
+  // Data'tor
   virtual ~UnitTest();
 
   // Pushes a trace defined by SCOPED_TRACE() on to the per-thread
@@ -1672,7 +1672,7 @@ class WithParamInterface {
   // Static value used for accessing parameter during a test lifetime.
   static const ParamType* parameter_;
 
-  // TestClass must be a subclass of WithParamInterface<T> and Test.
+  // TestClass must be a subclass of WithParamInterface<Type> and Test.
   template <class TestClass>
   friend class internal::ParameterizedTestFactory;
 };
@@ -2101,9 +2101,9 @@ class GTEST_API_ ScopedTrace {
 // StaticAssertTypeEq<T1, T2>() is effective ONLY IF the method is
 // instantiated.  For example, given:
 //
-//   template <typename T> class Foo {
+//   template <typename Type> class Foo {
 //    public:
-//     void Bar() { testing::StaticAssertTypeEq<int, T>(); }
+//     void Bar() { testing::StaticAssertTypeEq<int, Type>(); }
 //   };
 //
 // the code:

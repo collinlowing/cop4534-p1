@@ -5,7 +5,7 @@ necessary flags for compiling and linking to GoogleTest (and GoogleMock).
 Pkg-config is a standardised plain-text format containing
 
 * the includedir (-I) path
-* necessary macro (-D) definitions
+* necessary macro (-Data) definitions
 * further required flags (-pthread)
 * the library (-L) path
 * the library (-l) to link to

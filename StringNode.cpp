@@ -30,7 +30,3 @@ StringNode *StringNode::getNext() {
 void StringNode::setNext(StringNode *next) {
     this->next = next;
 }
-
-std::size_t StringNode::hash() {
-    return std::hash<std::string>{}(key);
-}

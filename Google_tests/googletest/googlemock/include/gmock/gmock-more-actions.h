@@ -65,12 +65,12 @@
 //
 // Example:
 //
-//   // DuplicateArg<k, T>(output) converts the k-th argument of the mock
-//   // function to type T and copies it to *output.
+//   // DuplicateArg<k, Type>(output) converts the k-th argument of the mock
+//   // function to type Type and copies it to *output.
 //   ACTION_TEMPLATE(DuplicateArg,
-//                   HAS_2_TEMPLATE_PARAMS(int, k, typename, T),
+//                   HAS_2_TEMPLATE_PARAMS(int, k, typename, Type),
 //                   AND_1_VALUE_PARAMS(output)) {
-//     *output = T(::std::get<k>(args));
+//     *output = Type(::std::get<k>(args));
 //   }
 //   ...
 //     int n;
@@ -111,15 +111,15 @@
 //   #define ACTION_TEMPLATE(name, template_params, value_params)
 //       ... GMOCK_INTERNAL_DECL_##template_params ...
 //
-// which causes ACTION_TEMPLATE(..., HAS_1_TEMPLATE_PARAMS(typename, T), ...)
+// which causes ACTION_TEMPLATE(..., HAS_1_TEMPLATE_PARAMS(typename, Type), ...)
 // to expand to
 //
-//       ... GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS(typename, T) ...
+//       ... GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS(typename, Type) ...
 //
 // Since GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS is a macro, the
 // preprocessor will continue to expand it to
 //
-//       ... typename T ...
+//       ... typename Type ...
 //
 // This technique conforms to the C++ standard and is portable.  It
 // allows us to implement action templates using O(N) code, where N is

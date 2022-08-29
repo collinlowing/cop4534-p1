@@ -398,8 +398,8 @@ Writing simply `EXPECT_PRED1(IsPositive, 5);` would result in a compiler error.
 Similarly, to use a template function, specify the template arguments:
 
 ```cpp
-template <typename T>
-bool IsNegative(T x) {
+template <typename Type>
+bool IsNegative(Type x) {
   return x < 0;
 }
 ...
@@ -449,8 +449,8 @@ testing::AssertionResult PredicateFormatter(const char* expr1,
 where *`val1`*, *`val2`*, ..., *`valn`* are the values of the predicate
 arguments, and *`expr1`*, *`expr2`*, ..., *`exprn`* are the corresponding
 expressions as they appear in the source code. The types `T1`, `T2`, ..., `Tn`
-can be either value types or reference types; if an argument has type `T`, it
-can be declared as either `T` or `const T&`, whichever is appropriate. For more
+can be either value types or reference types; if an argument has type `Type`, it
+can be declared as either `Type` or `const Type&`, whichever is appropriate. For more
 about the return type `testing::AssertionResult`, see
 [Using a Function That Returns an AssertionResult](../advanced.md#using-a-function-that-returns-an-assertionresult).
 

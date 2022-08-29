@@ -148,13 +148,13 @@ The argument *`TestFixtureName`* is a fixture class template, parameterized by a
 type, for example:
 
 ```cpp
-template <typename T>
+template <typename Type>
 class MyFixture : public ::testing::Test {
  public:
   ...
-  using List = std::list<T>;
-  static T shared_;
-  T value_;
+  using List = std::list<Type>;
+  static Type shared_;
+  Type value_;
 };
 ```
 
@@ -447,8 +447,8 @@ instance. The effect is undone with the destruction of the instance.
 The `ScopedTrace` constructor has the following form:
 
 ```cpp
-template <typename T>
-ScopedTrace(const char* file, int line, const T& message)
+template <typename Type>
+ScopedTrace(const char* file, int line, const Type& message)
 ```
 
 Example usage:
@@ -553,10 +553,10 @@ after running each individual test.
 
 ### TestWithParam {#TestWithParam}
 
-`::testing::TestWithParam<T>`
+`::testing::TestWithParam<Type>`
 
 A convenience class which inherits from both [`Test`](#Test) and
-[`WithParamInterface<T>`](#WithParamInterface).
+[`WithParamInterface<Type>`](#WithParamInterface).
 
 ### TestSuite {#TestSuite}
 
@@ -752,9 +752,9 @@ Returns the result of the test. See [`TestResult`](#TestResult).
 
 ### TestParamInfo {#TestParamInfo}
 
-`::testing::TestParamInfo<T>`
+`::testing::TestParamInfo<Type>`
 
-Describes a parameter to a value-parameterized test. The type `T` is the type of
+Describes a parameter to a value-parameterized test. The type `Type` is the type of
 the parameter.
 
 Contains the fields `param` and `index` which hold the value of the parameter
@@ -1269,11 +1269,11 @@ An integer type representing time in milliseconds.
 
 ### Types {#Types}
 
-`::testing::Types<T...>`
+`::testing::Types<Type...>`
 
 Represents a list of types for use in typed tests and type-parameterized tests.
 
-The template argument `T...` can be any number of types, for example:
+The template argument `Type...` can be any number of types, for example:
 
 ```
 ::testing::Types<char, int, unsigned int>
@@ -1285,7 +1285,7 @@ information.
 
 ### WithParamInterface {#WithParamInterface}
 
-`::testing::WithParamInterface<T>`
+`::testing::WithParamInterface<Type>`
 
 The pure interface class that all value-parameterized tests inherit from.
 
@@ -1294,7 +1294,7 @@ and `WithParamInterface`. In most cases that just means inheriting from
 [`TestWithParam`](#TestWithParam), but more complicated test hierarchies may
 need to inherit from `Test` and `WithParamInterface` at different levels.
 
-This interface defines the type alias `ParamType` for the parameter type `T` and
+This interface defines the type alias `ParamType` for the parameter type `Type` and
 has support for accessing the test parameter value via the `GetParam()` method:
 
 ```
@@ -1421,7 +1421,7 @@ for more information.
 
 ### PrintToStringParamName {#PrintToStringParamName}
 
-`std::string ::testing::PrintToStringParamName(TestParamInfo<T>& info)`
+`std::string ::testing::PrintToStringParamName(TestParamInfo<Type>& info)`
 
 A built-in parameterized test name generator which returns the result of
 [`PrintToString`](#PrintToString) called on `info.param`. Does not work when the

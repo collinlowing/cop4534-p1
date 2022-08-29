@@ -30,30 +30,30 @@
 // Google Test - The Google C++ Testing and Mocking Framework
 //
 // This file implements a universal value printer that can print a
-// value of any type T:
+// value of any type Type:
 //
-//   void ::testing::internal::UniversalPrinter<T>::Print(value, ostream_ptr);
+//   void ::testing::internal::UniversalPrinter<Type>::Print(value, ostream_ptr);
 //
-// A user can teach this function how to print a class type T by
+// A user can teach this function how to print a class type Type by
 // defining either operator<<() or PrintTo() in the namespace that
-// defines T.  More specifically, the FIRST defined function in the
-// following list will be used (assuming T is defined in namespace
+// defines Type.  More specifically, the FIRST defined function in the
+// following list will be used (assuming Type is defined in namespace
 // foo):
 //
-//   1. foo::PrintTo(const T&, ostream*)
-//   2. operator<<(ostream&, const T&) defined in either foo or the
+//   1. foo::PrintTo(const Type&, ostream*)
+//   2. operator<<(ostream&, const Type&) defined in either foo or the
 //      global namespace.
 //
-// However if T is an STL-style container then it is printed element-wise
-// unless foo::PrintTo(const T&, ostream*) is defined. Note that
+// However if Type is an STL-style container then it is printed element-wise
+// unless foo::PrintTo(const Type&, ostream*) is defined. Note that
 // operator<<() is ignored for container types.
 //
 // If none of the above is defined, it will print the debug string of
 // the value if it is a protocol buffer, or print the raw bytes in the
 // value otherwise.
 //
-// To aid debugging: when T is a reference type, the address of the
-// value is also printed; when T is a (const) char pointer, both the
+// To aid debugging: when Type is a reference type, the address of the
+// value is also printed; when Type is a (const) char pointer, both the
 // pointer value and the NUL-terminated string it points to are
 // printed.
 //
@@ -62,18 +62,18 @@
 //   // Prints a value to a string.  For a (const or not) char
 //   // pointer, the NUL-terminated string (but not the pointer) is
 //   // printed.
-//   std::string ::testing::PrintToString(const T& value);
+//   std::string ::testing::PrintToString(const Type& value);
 //
 //   // Prints a value tersely: for a reference type, the referenced
 //   // value (but not the address) is printed; for a (const or not) char
 //   // pointer, the NUL-terminated string (but not the pointer) is
 //   // printed.
-//   void ::testing::internal::UniversalTersePrint(const T& value, ostream*);
+//   void ::testing::internal::UniversalTersePrint(const Type& value, ostream*);
 //
 //   // Prints value using the type inferred by the compiler.  The difference
 //   // from UniversalTersePrint() is that this function prints both the
 //   // pointer and the NUL-terminated string for a (const or not) char pointer.
-//   void ::testing::internal::UniversalPrint(const T& value, ostream*);
+//   void ::testing::internal::UniversalPrint(const Type& value, ostream*);
 //
 //   // Prints the fields of a tuple tersely to a string vector, one
 //   // element for each field. Tuple support must be enabled in
@@ -169,7 +169,7 @@ struct FunctionPointerPrinter {
     if (p == nullptr) {
       *os << "NULL";
     } else {
-      // T is a function type, so '*os << p' doesn't do what we want
+      // Type is a function type, so '*os << p' doesn't do what we want
       // (it just prints p as bool).  We want to print p as a const
       // void*.
       *os << reinterpret_cast<const void*>(p);
@@ -183,7 +183,7 @@ struct PointerPrinter {
     if (p == nullptr) {
       *os << "NULL";
     } else {
-      // T is not a function type.  We just call << to print p,
+      // Type is not a function type.  We just call << to print p,
       // relying on ADL to pick up user-defined << for their pointer
       // types, if any.
       *os << p;
@@ -238,12 +238,12 @@ struct ProtobufPrinter {
 };
 
 struct ConvertibleToIntegerPrinter {
-  // Since T has no << operator or PrintTo() but can be implicitly
+  // Since Type has no << operator or PrintTo() but can be implicitly
   // converted to BiggestInt, we print it as a BiggestInt.
   //
-  // Most likely T is an enum type (either named or unnamed), in which
+  // Most likely Type is an enum type (either named or unnamed), in which
   // case printing it as an integer is the desired behavior.  In case
-  // T is not an enum, printing it as an integer is the best we can do
+  // Type is not an enum, printing it as an integer is the best we can do
   // given that it has no user-defined printer.
   static void PrintValue(internal::BiggestInt value, ::std::ostream* os) {
     *os << value;
@@ -414,7 +414,7 @@ std::string FormatForComparisonFailureMessage(const T1& value,
   return FormatForComparison<T1, T2>::Format(value);
 }
 
-// UniversalPrinter<T>::Print(value, ostream_ptr) prints the given
+// UniversalPrinter<Type>::Print(value, ostream_ptr) prints the given
 // value to the given ostream.  The caller must ensure that
 // 'ostream_ptr' is not NULL, or the behavior is undefined.
 //
@@ -426,8 +426,8 @@ class UniversalPrinter;
 
 // Prints the given value using the << operator if it has one;
 // otherwise prints the bytes in it.  This is what
-// UniversalPrinter<T>::Print() does when PrintTo() is not specialized
-// or overloaded for type T.
+// UniversalPrinter<Type>::Print() does when PrintTo() is not specialized
+// or overloaded for type Type.
 //
 // A user can override this behavior for a class type Foo by defining
 // an overload of PrintTo() in the namespace where Foo is defined.  We
@@ -441,7 +441,7 @@ void PrintTo(const T& value, ::std::ostream* os) {
 }
 
 // The following list of PrintTo() overloads tells
-// UniversalPrinter<T>::Print() how to print standard types (built-in
+// UniversalPrinter<Type>::Print() how to print standard types (built-in
 // types, strings, plain arrays, and pointers).
 
 // Overloads for various char types.
@@ -640,7 +640,7 @@ void PrintTo(const std::shared_ptr<T>& ptr, std::ostream* os) {
   (PrintSmartPointer<T>)(ptr, os, 0);
 }
 
-// Helper function for printing a tuple.  T must be instantiated with
+// Helper function for printing a tuple.  Type must be instantiated with
 // a tuple type.
 template <typename T>
 void PrintTupleTo(const T&, std::integral_constant<size_t, 0>,
@@ -678,8 +678,8 @@ void PrintTo(const ::std::pair<T1, T2>& value, ::std::ostream* os) {
   *os << ')';
 }
 
-// Implements printing a non-reference type T by letting the compiler
-// pick the right overload of PrintTo() for T.
+// Implements printing a non-reference type Type by letting the compiler
+// pick the right overload of PrintTo() for Type.
 template <typename T>
 class UniversalPrinter {
  public:
@@ -694,7 +694,7 @@ class UniversalPrinter {
     // By default, ::testing::internal::PrintTo() is used for printing
     // the value.
     //
-    // Thanks to Koenig look-up, if T is a class and has its own
+    // Thanks to Koenig look-up, if Type is a class and has its own
     // PrintTo() function defined in its namespace, that function will
     // be visible here.  Since it is more specific than the generic ones
     // in ::testing::internal, it will be picked by the compiler in the
@@ -741,10 +741,10 @@ class UniversalPrinter<Any> {
 
 // Printer for std::optional / absl::optional
 
-template <typename T>
-class UniversalPrinter<Optional<T>> {
+template <typename Type>
+class UniversalPrinter<Optional<Type>> {
  public:
-  static void Print(const Optional<T>& value, ::std::ostream* os) {
+  static void Print(const Optional<Type>& value, ::std::ostream* os) {
     *os << '(';
     if (!value) {
       *os << "nullopt";
@@ -769,10 +769,10 @@ class UniversalPrinter<decltype(Nullopt())> {
 
 // Printer for std::variant / absl::variant
 
-template <typename... T>
-class UniversalPrinter<Variant<T...>> {
+template <typename... Type>
+class UniversalPrinter<Variant<Type...>> {
  public:
-  static void Print(const Variant<T...>& value, ::std::ostream* os) {
+  static void Print(const Variant<Type...>& value, ::std::ostream* os) {
     *os << '(';
 #if GTEST_HAS_ABSL
     absl::visit(Visitor{os, value.index()}, value);
@@ -842,7 +842,7 @@ GTEST_API_ void UniversalPrintArray(const char32_t* begin, size_t len,
 GTEST_API_ void UniversalPrintArray(const wchar_t* begin, size_t len,
                                     ::std::ostream* os);
 
-// Implements printing an array type T[N].
+// Implements printing an array type Type[N].
 template <typename T, size_t N>
 class UniversalPrinter<T[N]> {
  public:
@@ -853,7 +853,7 @@ class UniversalPrinter<T[N]> {
   }
 };
 
-// Implements printing a reference type T&.
+// Implements printing a reference type Type&.
 template <typename T>
 class UniversalPrinter<T&> {
  public:
@@ -863,7 +863,7 @@ class UniversalPrinter<T&> {
 
   static void Print(const T& value, ::std::ostream* os) {
     // Prints the address of the value.  We use reinterpret_cast here
-    // as static_cast doesn't compile when T is a function type.
+    // as static_cast doesn't compile when Type is a function type.
     *os << "@" << reinterpret_cast<const void*>(&value) << " ";
 
     // Then prints the value itself.
@@ -994,7 +994,7 @@ void UniversalTersePrint(const T& value, ::std::ostream* os) {
 template <typename T>
 void UniversalPrint(const T& value, ::std::ostream* os) {
   // A workarond for the bug in VC++ 7.1 that prevents us from instantiating
-  // UniversalPrinter with T directly.
+  // UniversalPrinter with Type directly.
   typedef T T1;
   UniversalPrinter<T1>::Print(value, os);
 }

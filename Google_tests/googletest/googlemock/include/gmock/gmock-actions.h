@@ -37,7 +37,7 @@
 // will define an action with the given name that executes the
 // statements.  The value returned by the statements will be used as
 // the return value of the action.  Inside the statements, you can
-// refer to the K-th (0-based) argument of the mock function by
+// refer to the Key-th (0-based) argument of the mock function by
 // 'argK', and refer to its type by 'argK_type'.  For example:
 //
 //   ACTION(IncrementArg1) {
@@ -166,8 +166,8 @@ namespace testing {
 
     namespace internal {
 
-// BuiltInDefaultValueGetter<T, true>::Get() returns a
-// default-constructed T value.  BuiltInDefaultValueGetter<T,
+// BuiltInDefaultValueGetter<Type, true>::Get() returns a
+// default-constructed Type value.  BuiltInDefaultValueGetter<Type,
 // false>::Get() crashes with an error.
 //
 // This primary template is used when kDefaultConstructible is true.
@@ -187,17 +187,17 @@ namespace testing {
             }
         };
 
-// BuiltInDefaultValue<T>::Get() returns the "built-in" default value
-// for type T, which is NULL when T is a raw pointer type, 0 when T is
-// a numeric type, false when T is bool, or "" when T is string or
+// BuiltInDefaultValue<Type>::Get() returns the "built-in" default value
+// for type Type, which is NULL when Type is a raw pointer type, 0 when Type is
+// a numeric type, false when Type is bool, or "" when Type is string or
 // std::string.  In addition, in C++11 and above, it turns a
-// default-constructed T value if T is default constructible.  For any
-// other type T, the built-in default T value is undefined, and the
+// default-constructed Type value if Type is default constructible.  For any
+// other type Type, the built-in default Type value is undefined, and the
 // function will abort the process.
         template<typename T>
         class BuiltInDefaultValue {
         public:
-            // This function returns true if and only if type T has a built-in default
+            // This function returns true if and only if type Type has a built-in default
             // value.
             static bool Exists() { return ::std::is_default_constructible<T>::value; }
 
@@ -208,7 +208,7 @@ namespace testing {
         };
 
 // This partial specialization says that we use the same built-in
-// default value for T and const T.
+// default value for Type and const Type.
         template<typename T>
         class BuiltInDefaultValue<const T> {
         public:
@@ -321,8 +321,8 @@ namespace testing {
 // Detects whether an expression of type `From` can be implicitly converted to
 // `To` according to [conv]. In C++17, [conv]/3 defines this as follows:
 //
-//     An expression e can be implicitly converted to a type T if and only if
-//     the declaration T t=e; is well-formed, for some invented temporary
+//     An expression e can be implicitly converted to a type Type if and only if
+//     the declaration Type t=e; is well-formed, for some invented temporary
 //     variable t ([dcl.init]).
 //
 // [conv]/2 implies we can use function argument passing to detect whether this
@@ -343,16 +343,16 @@ namespace testing {
         template<typename From, typename To>
         struct is_implicitly_convertible {
         private:
-            // A function that accepts a parameter of type T. This can be called with type
-            // U successfully only if U is implicitly convertible to T.
+            // A function that accepts a parameter of type Type. This can be called with type
+            // U successfully only if U is implicitly convertible to Type.
             template<typename T>
             static void Accept(T);
 
-            // A function that creates a value of type T.
+            // A function that creates a value of type Type.
             template<typename T>
             static T Make();
 
-            // An overload be selected when implicit conversion from T to To is possible.
+            // An overload be selected when implicit conversion from Type to To is possible.
             template<typename T, typename = decltype(Accept<To>(Make<T>()))>
             static std::true_type TestImplicitConversion(int);
 
@@ -587,17 +587,17 @@ namespace testing {
 // otherwise Google Mock won't know what value to return and will have
 // to abort the process.
 //
-// The DefaultValue<T> class allows a user to specify the
-// default value for a type T that is both copyable and publicly
+// The DefaultValue<Type> class allows a user to specify the
+// default value for a type Type that is both copyable and publicly
 // destructible (i.e. anything that can be used as a function return
 // type).  The usage is:
 //
-//   // Sets the default value for type T to be foo.
-//   DefaultValue<T>::Set(foo);
+//   // Sets the default value for type Type to be foo.
+//   DefaultValue<Type>::Set(foo);
     template<typename T>
     class DefaultValue {
     public:
-        // Sets the default value for type T; requires T to be
+        // Sets the default value for type Type; requires Type to be
         // copy-constructable and have a public destructor.
         static void Set(T x) {
             delete producer_;
@@ -605,7 +605,7 @@ namespace testing {
         }
 
         // Provides a factory function to be called to generate the default value.
-        // This method can be used even if T is only move-constructible, but it is not
+        // This method can be used even if Type is only move-constructible, but it is not
         // limited to that case.
         typedef T (*FactoryFunction)();
 
@@ -614,22 +614,22 @@ namespace testing {
             producer_ = new FactoryValueProducer(factory);
         }
 
-        // Unsets the default value for type T.
+        // Unsets the default value for type Type.
         static void Clear() {
             delete producer_;
             producer_ = nullptr;
         }
 
-        // Returns true if and only if the user has set the default value for type T.
+        // Returns true if and only if the user has set the default value for type Type.
         static bool IsSet() { return producer_ != nullptr; }
 
-        // Returns true if T has a default return value set by the user or there
+        // Returns true if Type has a default return value set by the user or there
         // exists a built-in default value.
         static bool Exists() {
             return IsSet() || internal::BuiltInDefaultValue<T>::Exists();
         }
 
-        // Returns the default value for type T if the user has set one;
+        // Returns the default value for type Type if the user has set one;
         // otherwise returns the built-in default value. Requires that Exists()
         // is true, which ensures that the return value is well-defined.
         static T Get() {
@@ -682,24 +682,24 @@ namespace testing {
     template<typename T>
     class DefaultValue<T &> {
     public:
-        // Sets the default value for type T&.
+        // Sets the default value for type Type&.
         static void Set(T &x) {  // NOLINT
             address_ = &x;
         }
 
-        // Unsets the default value for type T&.
+        // Unsets the default value for type Type&.
         static void Clear() { address_ = nullptr; }
 
-        // Returns true if and only if the user has set the default value for type T&.
+        // Returns true if and only if the user has set the default value for type Type&.
         static bool IsSet() { return address_ != nullptr; }
 
-        // Returns true if T has a default return value set by the user or there
+        // Returns true if Type has a default return value set by the user or there
         // exists a built-in default value.
         static bool Exists() {
             return IsSet() || internal::BuiltInDefaultValue<T &>::Exists();
         }
 
-        // Returns the default value for type T& if the user has set one;
+        // Returns the default value for type Type& if the user has set one;
         // otherwise returns the built-in default value if there is one;
         // otherwise aborts the process.
         static T &Get() {
@@ -721,11 +721,11 @@ namespace testing {
         static void Get() {}
     };
 
-// Points to the user-set default value for type T.
+// Points to the user-set default value for type Type.
     template<typename T>
     typename DefaultValue<T>::ValueProducer *DefaultValue<T>::producer_ = nullptr;
 
-// Points to the user-set default value for type T&.
+// Points to the user-set default value for type Type&.
     template<typename T>
     T *DefaultValue<T &>::address_ = nullptr;
 
@@ -757,8 +757,8 @@ namespace testing {
 
 // An Action<R(Args...)> is a copyable and IMMUTABLE (except by assignment)
 // object that represents an action to be taken when a mock function of type
-// R(Args...) is called. The implementation of Action<T> is just a
-// std::shared_ptr to const ActionInterface<T>. Don't inherit from Action! You
+// R(Args...) is called. The implementation of Action<Type> is just a
+// std::shared_ptr to const ActionInterface<Type>. Don't inherit from Action! You
 // can view an object implementing ActionInterface<F> as a concrete action
 // (including its current state), and an Action<F> object as a handle to it.
     template<typename R, typename... Args>
@@ -1120,9 +1120,9 @@ namespace testing {
             R value_;
         };
 
-// A specialization of ReturnAction<R> when R is ByMoveWrapper<T> for some T.
+// A specialization of ReturnAction<R> when R is ByMoveWrapper<Type> for some Type.
 //
-// This version applies the type system-defeating hack of moving from T even in
+// This version applies the type system-defeating hack of moving from Type even in
 // the const call operator, checking at runtime that it isn't called more than
 // once, since the user has declared their intent to do so by using ByMove.
         template<typename T>
@@ -1141,7 +1141,7 @@ namespace testing {
 
         private:
             // We store our state on the heap so that we are copyable as required by
-            // Action, despite the fact that we are stateful and T may not be copyable.
+            // Action, despite the fact that we are stateful and Type may not be copyable.
             struct State {
                 explicit State(T &&value_in) : value(std::move(value_in)) {}
 
@@ -1557,7 +1557,7 @@ namespace testing {
             using Base = DoAllAction<OtherActions...>;
 
             // The type of reference that should be provided to an initial action for a
-            // mocked function parameter of type T.
+            // mocked function parameter of type Type.
             //
             // There are two quirks here:
             //
@@ -1572,15 +1572,15 @@ namespace testing {
             //     surprising for a non-scalar type where there may be a performance
             //     impact, or it might even be impossible, to pass by value.
             //
-            //  *  More surprisingly, `const T&` is often not a const reference type.
-            //     By the reference collapsing rules in C++17 [dcl.ref]/6, if T refers to
-            //     U& or U&& for some non-scalar type U, then InitialActionArgType<T> is
+            //  *  More surprisingly, `const Type&` is often not a const reference type.
+            //     By the reference collapsing rules in C++17 [dcl.ref]/6, if Type refers to
+            //     U& or U&& for some non-scalar type U, then InitialActionArgType<Type> is
             //     U&. In other words, we may hand over a non-const reference.
             //
             //     So for example, given some non-scalar type Obj we have the following
             //     mappings:
             //
-            //            T               InitialActionArgType<T>
+            //            Type               InitialActionArgType<Type>
             //         -------            -----------------------
             //         Obj                const Obj&
             //         Obj&               Obj&
@@ -2042,8 +2042,8 @@ namespace testing {
         return ::std::reference_wrapper<T>(l_value);
     }
 
-// The ReturnNew<T>(a1, a2, ..., a_k) action returns a pointer to a new
-// instance of type T, constructed on the heap with constructor arguments
+// The ReturnNew<Type>(a1, a2, ..., a_k) action returns a pointer to a new
+// instance of type Type, constructed on the heap with constructor arguments
 // a1, a2, ..., and a_k. The caller assumes ownership of the returned value.
     template<typename T, typename... Params>
     internal::ReturnNewAction<T, typename std::decay<Params>::type...> ReturnNew(

@@ -44,13 +44,13 @@
 
 // First, define a fixture class template.  It should be parameterized
 // by a type.  Remember to derive it from testing::Test.
-template <typename T>
+template <typename Type>
 class FooTest : public testing::Test {
  public:
   ...
-  typedef std::list<T> List;
-  static T shared_;
-  T value_;
+  typedef std::list<Type> List;
+  static Type shared_;
+  Type value_;
 };
 
 // Next, associate a list of types with the test suite, which will be
@@ -93,11 +93,11 @@ TYPED_TEST(FooTest, HasPropertyA) { ... }
 // For example:
 //   class MyTypeNames {
 //    public:
-//     template <typename T>
+//     template <typename Type>
 //     static std::string GetName(int) {
-//       if (std::is_same<T, char>()) return "char";
-//       if (std::is_same<T, int>()) return "int";
-//       if (std::is_same<T, unsigned int>()) return "unsignedInt";
+//       if (std::is_same<Type, char>()) return "char";
+//       if (std::is_same<Type, int>()) return "int";
+//       if (std::is_same<Type, unsigned int>()) return "unsignedInt";
 //     }
 //   };
 //   TYPED_TEST_SUITE(FooTest, MyTypes, MyTypeNames);
@@ -122,7 +122,7 @@ TYPED_TEST(FooTest, HasPropertyA) { ... }
 
 // First, define a fixture class template.  It should be parameterized
 // by a type.  Remember to derive it from testing::Test.
-template <typename T>
+template <typename Type>
 class FooTest : public testing::Test {
   ...
 };

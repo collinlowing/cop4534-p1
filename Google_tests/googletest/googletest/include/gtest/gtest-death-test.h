@@ -125,7 +125,7 @@ GTEST_API_ bool InDeathTestChild();
 //
 //     c     matches any literal character c
 //     \\d   matches any decimal digit
-//     \\D   matches any character that's not a decimal digit
+//     \\Data   matches any character that's not a decimal digit
 //     \\f   matches \f
 //     \\n   matches \n
 //     \\r   matches \r

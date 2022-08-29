@@ -2220,7 +2220,7 @@ AssertionResult IsHRESULTFailure(const char* expr, long hr) {  // NOLINT
     TestResult::TestResult()
             : death_test_count_(0), start_timestamp_(0), elapsed_time_(0) {}
 
-// D'tor.
+// Data'tor.
     TestResult::~TestResult() {}
 
 // Returns the i-th test part result among all the results. i can
@@ -4211,7 +4211,7 @@ static WORD GetNewColor(GTestColor color, WORD old_color_attrs) {
             // YYYY-MM-DDThh:mm:ss.sss
             return StreamableToString(time_struct.tm_year + 1900) + "-" +
                    String::FormatIntWidth2(time_struct.tm_mon + 1) + "-" +
-                   String::FormatIntWidth2(time_struct.tm_mday) + "T" +
+                   String::FormatIntWidth2(time_struct.tm_mday) + "Type" +
                    String::FormatIntWidth2(time_struct.tm_hour) + ":" +
                    String::FormatIntWidth2(time_struct.tm_min) + ":" +
                    String::FormatIntWidth2(time_struct.tm_sec) + "." +
@@ -4658,7 +4658,7 @@ static WORD GetNewColor(GTestColor color, WORD old_color_attrs) {
             // YYYY-MM-DDThh:mm:ss
             return StreamableToString(time_struct.tm_year + 1900) + "-" +
                    String::FormatIntWidth2(time_struct.tm_mon + 1) + "-" +
-                   String::FormatIntWidth2(time_struct.tm_mday) + "T" +
+                   String::FormatIntWidth2(time_struct.tm_mday) + "Type" +
                    String::FormatIntWidth2(time_struct.tm_hour) + ":" +
                    String::FormatIntWidth2(time_struct.tm_min) + ":" +
                    String::FormatIntWidth2(time_struct.tm_sec) + "Z";
@@ -6494,7 +6494,7 @@ static WORD GetNewColor(GTestColor color, WORD old_color_attrs) {
 //   @R    changes the color to red.
 //   @G    changes the color to green.
 //   @Y    changes the color to yellow.
-//   @D    changes to the default terminal text color.
+//   @Data    changes to the default terminal text color.
 //
         static void PrintColorEncoded(const char *str) {
             GTestColor color = GTestColor::kDefault;  // The current color.
@@ -6537,94 +6537,94 @@ static WORD GetNewColor(GTestColor color, WORD old_color_attrs) {
                 "\n"
                 "Test Selection:\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "list_tests@D\n"
+                "list_tests@Data\n"
                 "      List the names of all tests instead of running them. The name of\n"
                 "      TEST(Foo, Bar) is \"Foo.Bar\".\n"
                 "  @G--" GTEST_FLAG_PREFIX_
                 "filter=@YPOSITIVE_PATTERNS"
-                "[@G-@YNEGATIVE_PATTERNS]@D\n"
+                "[@G-@YNEGATIVE_PATTERNS]@Data\n"
                 "      Run only the tests whose name matches one of the positive patterns "
                 "but\n"
                 "      none of the negative patterns. '?' matches any single character; "
                 "'*'\n"
                 "      matches any substring; ':' separates two patterns.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "also_run_disabled_tests@D\n"
+                "also_run_disabled_tests@Data\n"
                 "      Run all disabled tests too.\n"
                 "\n"
                 "Test Execution:\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "repeat=@Y[COUNT]@D\n"
+                "repeat=@Y[COUNT]@Data\n"
                 "      Run the tests repeatedly; use a negative count to repeat forever.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "shuffle@D\n"
+                "shuffle@Data\n"
                 "      Randomize tests' orders on every iteration.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "random_seed=@Y[NUMBER]@D\n"
+                "random_seed=@Y[NUMBER]@Data\n"
                 "      Random number seed to use for shuffling test orders (between 1 and\n"
                 "      99999, or 0 to use a seed based on the current time).\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "recreate_environments_when_repeating@D\n"
+                "recreate_environments_when_repeating@Data\n"
                 "      Sets up and tears down the global test environment on each repeat\n"
                 "      of the test.\n"
                 "\n"
                 "Test Output:\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "color=@Y(@Gyes@Y|@Gno@Y|@Gauto@Y)@D\n"
-                "      Enable/disable colored output. The default is @Gauto@D.\n"
+                "color=@Y(@Gyes@Y|@Gno@Y|@Gauto@Y)@Data\n"
+                "      Enable/disable colored output. The default is @Gauto@Data.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "brief=1@D\n"
+                "brief=1@Data\n"
                 "      Only print test failures.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "print_time=0@D\n"
+                "print_time=0@Data\n"
                 "      Don't print the elapsed time of each test.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
                 "output=@Y(@Gjson@Y|@Gxml@Y)[@G:@YDIRECTORY_PATH@G" GTEST_PATH_SEP_
-                "@Y|@G:@YFILE_PATH]@D\n"
+                "@Y|@G:@YFILE_PATH]@Data\n"
                 "      Generate a JSON or XML report in the given directory or with the "
                 "given\n"
-                "      file name. @YFILE_PATH@D defaults to @Gtest_detail.xml@D.\n"
+                "      file name. @YFILE_PATH@Data defaults to @Gtest_detail.xml@Data.\n"
                 #if GTEST_CAN_STREAM_RESULTS_
                 "  @G--" GTEST_FLAG_PREFIX_
-                "stream_result_to=@YHOST@G:@YPORT@D\n"
+                "stream_result_to=@YHOST@G:@YPORT@Data\n"
                 "      Stream test results to the given server.\n"
                 #endif  // GTEST_CAN_STREAM_RESULTS_
                 "\n"
                 "Assertion Behavior:\n"
                 #if GTEST_HAS_DEATH_TEST && !GTEST_OS_WINDOWS
                 "  @G--" GTEST_FLAG_PREFIX_
-                "death_test_style=@Y(@Gfast@Y|@Gthreadsafe@Y)@D\n"
+                "death_test_style=@Y(@Gfast@Y|@Gthreadsafe@Y)@Data\n"
                 "      Set the default death test style.\n"
                 #endif  // GTEST_HAS_DEATH_TEST && !GTEST_OS_WINDOWS
                 "  @G--" GTEST_FLAG_PREFIX_
-                "break_on_failure@D\n"
+                "break_on_failure@Data\n"
                 "      Turn assertion failures into debugger break-points.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "throw_on_failure@D\n"
+                "throw_on_failure@Data\n"
                 "      Turn assertion failures into C++ exceptions for use by an external\n"
                 "      test framework.\n"
                 "  @G--" GTEST_FLAG_PREFIX_
-                "catch_exceptions=0@D\n"
+                "catch_exceptions=0@Data\n"
                 "      Do not report exceptions as test failures. Instead, allow them\n"
                 "      to crash the program or throw a pop-up (on Windows).\n"
                 "\n"
                 "Except for @G--" GTEST_FLAG_PREFIX_
-                "list_tests@D, you can alternatively set "
+                "list_tests@Data, you can alternatively set "
                 "the corresponding\n"
                 "environment variable of a flag (all letters in upper-case). For example, "
                 "to\n"
                 "disable colored text output, you can either specify "
                 "@G--" GTEST_FLAG_PREFIX_
-                "color=no@D or set\n"
+                "color=no@Data or set\n"
                 "the @G" GTEST_FLAG_PREFIX_UPPER_
-                "COLOR@D environment variable to @Gno@D.\n"
+                "COLOR@Data environment variable to @Gno@Data.\n"
                 "\n"
                 "For more information, please read the " GTEST_NAME_
                 " documentation at\n"
-                "@G" GTEST_PROJECT_URL_ "@D. If you find a bug in " GTEST_NAME_
+                "@G" GTEST_PROJECT_URL_ "@Data. If you find a bug in " GTEST_NAME_
                 "\n"
                 "(not one in your own code or tests), please report it to\n"
-                "@G<" GTEST_DEV_EMAIL_ ">@D.\n";
+                "@G<" GTEST_DEV_EMAIL_ ">@Data.\n";
 
         static bool ParseGoogleTestFlag(const char *const arg) {
 #define GTEST_INTERNAL_PARSE_FLAG(flag_name)  \
@@ -6797,7 +6797,7 @@ static WORD GetNewColor(GTestColor color, WORD old_color_attrs) {
   // help message, but remove the color-encoding from the message first.
   absl::SetProgramUsageMessage(absl::StrReplaceAll(
       kColorEncodedHelpMessage,
-      {{"@D", ""}, {"@R", ""}, {"@G", ""}, {"@Y", ""}, {"@@", "@"}}));
+      {{"@Data", ""}, {"@R", ""}, {"@G", ""}, {"@Y", ""}, {"@@", "@"}}));
 #endif  // GTEST_HAS_ABSL
 
             ParseGoogleTestFlagsOnly(argc, argv);

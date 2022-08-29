@@ -143,7 +143,7 @@ class GTEST_API_ AssertionResult {
 
   // Used in the EXPECT_TRUE/FALSE(bool_expression).
   //
-  // T must be contextually convertible to bool.
+  // Type must be contextually convertible to bool.
   //
   // The second parameter prevents this overload from being considered if
   // the argument is implicitly convertible to AssertionResult. In that case

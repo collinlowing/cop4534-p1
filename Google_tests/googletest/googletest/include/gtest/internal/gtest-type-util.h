@@ -67,12 +67,12 @@ inline std::string CanonicalizeForStdLibVersioning(std::string s) {
 }
 
 #if GTEST_HAS_RTTI
-// GetTypeName(const std::type_info&) returns a human-readable name of type T.
+// GetTypeName(const std::type_info&) returns a human-readable name of type Type.
 inline std::string GetTypeName(const std::type_info& type) {
   const char* const name = type.name();
 #if GTEST_HAS_CXXABI_H_ || defined(__HP_aCC)
   int status = 0;
-  // gcc's implementation of typeid(T).name() mangles the type name,
+  // gcc's implementation of typeid(Type).name() mangles the type name,
   // so we have to demangle it.
 #if GTEST_HAS_CXXABI_H_
   using abi::__cxa_demangle;
@@ -87,7 +87,7 @@ inline std::string GetTypeName(const std::type_info& type) {
 }
 #endif  // GTEST_HAS_RTTI
 
-// GetTypeName<T>() returns a human-readable name of type T if and only if
+// GetTypeName<Type>() returns a human-readable name of type Type if and only if
 // RTTI is enabled, otherwise it returns a dummy type name.
 // NB: This function is also used in Google Mock, so don't move it inside of
 // the typed-test-only section below.
@@ -109,8 +109,8 @@ struct None {};
 
 // The template "selector" struct TemplateSel<Tmpl> is used to
 // represent Tmpl, which must be a class template with one type
-// parameter, as a type.  TemplateSel<Tmpl>::Bind<T>::type is defined
-// as the type Tmpl<T>.  This allows us to actually instantiate the
+// parameter, as a type.  TemplateSel<Tmpl>::Bind<Type>::type is defined
+// as the type Tmpl<Type>.  This allows us to actually instantiate the
 // template "selected" by TemplateSel<Tmpl>.
 //
 // This trick is necessary for simulating typedef for class templates,

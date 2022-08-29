@@ -133,8 +133,8 @@ gMock has a **built-in default action** for any function that returns `void`,
 `bool`, a numeric value, or a pointer. In C++11, it will additionally returns
 the default-constructed value, if one exists for the given type.
 
-To customize the default action for functions with return type `T`, use
-[`DefaultValue<T>`](reference/mocking.md#DefaultValue). For example:
+To customize the default action for functions with return type `Type`, use
+[`DefaultValue<Type>`](reference/mocking.md#DefaultValue). For example:
 
 ```cpp
   // Sets the default action for return type std::unique_ptr<Buzz> to

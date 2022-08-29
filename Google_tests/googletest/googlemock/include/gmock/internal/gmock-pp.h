@@ -124,7 +124,7 @@
 // Remove the parens, requires GMOCK_PP_IS_ENCLOSED_PARENS(args) => 1.
 #define GMOCK_PP_REMOVE_PARENS(...) GMOCK_PP_INTERNAL_REMOVE_PARENS __VA_ARGS__
 
-// Expands to _Macro(0, _Data, e1) _Macro(1, _Data, e2) ... _Macro(K -1, _Data,
+// Expands to _Macro(0, _Data, e1) _Macro(1, _Data, e2) ... _Macro(Key -1, _Data,
 // eK) as many of GMOCK_INTERNAL_NARG0 _Tuple.
 // Requires: * |_Macro| can be called with 3 arguments.
 //           * |_Tuple| expansion has no more than 15 elements.
@@ -132,7 +132,7 @@
   GMOCK_PP_CAT(GMOCK_PP_INTERNAL_FOR_EACH_IMPL_, GMOCK_PP_NARG0 _Tuple) \
   (0, _Macro, _Data, _Tuple)
 
-// Expands to _Macro(0, _Data, ) _Macro(1, _Data, ) ... _Macro(K - 1, _Data, )
+// Expands to _Macro(0, _Data, ) _Macro(1, _Data, ) ... _Macro(Key - 1, _Data, )
 // Empty if _K = 0.
 // Requires: * |_Macro| can be called with 3 arguments.
 //           * |_K| literal between 0 and 15

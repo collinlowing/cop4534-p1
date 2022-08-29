@@ -244,7 +244,7 @@
 //
 // This file also implements some commonly used argument matchers.  More
 // matchers can be defined by the user implementing the
-// MatcherInterface<T> interface if necessary.
+// MatcherInterface<Type> interface if necessary.
 //
 // See googletest/include/gtest/gtest-matchers.h for the definition of class
 // Matcher, class MatcherInterface, and others.
@@ -287,10 +287,10 @@ GTEST_DISABLE_MSC_WARNINGS_PUSH_(
 
 namespace testing {
 
-// To implement a matcher Foo for type T, define:
+// To implement a matcher Foo for type Type, define:
 //   1. a class FooMatcherImpl that implements the
-//      MatcherInterface<T> interface, and
-//   2. a factory function that creates a Matcher<T> object from a
+//      MatcherInterface<Type> interface, and
+//   2. a factory function that creates a Matcher<Type> object from a
 //      FooMatcherImpl*.
 //
 // The two-level delegation design makes it possible to allow a user
@@ -338,17 +338,17 @@ namespace testing {
         public:
             static Matcher<T> Cast(const M &polymorphic_matcher_or_value) {
                 // M can be a polymorphic matcher, in which case we want to use
-                // its conversion operator to create Matcher<T>.  Or it can be a value
-                // that should be passed to the Matcher<T>'s constructor.
+                // its conversion operator to create Matcher<Type>.  Or it can be a value
+                // that should be passed to the Matcher<Type>'s constructor.
                 //
-                // We can't call Matcher<T>(polymorphic_matcher_or_value) when M is a
-                // polymorphic matcher because it'll be ambiguous if T has an implicit
-                // constructor from M (this usually happens when T has an implicit
+                // We can't call Matcher<Type>(polymorphic_matcher_or_value) when M is a
+                // polymorphic matcher because it'll be ambiguous if Type has an implicit
+                // constructor from M (this usually happens when Type has an implicit
                 // constructor from any type).
                 //
                 // It won't work to unconditionally implicit_cast
-                // polymorphic_matcher_or_value to Matcher<T> because it won't trigger
-                // a user-defined conversion from M to T if one exists (assuming M is
+                // polymorphic_matcher_or_value to Matcher<Type> because it won't trigger
+                // a user-defined conversion from M to Type if one exists (assuming M is
                 // a value).
                 return CastImpl(polymorphic_matcher_or_value,
                                 std::is_convertible<M, Matcher<T>>{},
@@ -360,19 +360,19 @@ namespace testing {
             static Matcher<T> CastImpl(const M &polymorphic_matcher_or_value,
                                        std::true_type /* convertible_to_matcher */,
                                        std::integral_constant<bool, Ignore>) {
-                // M is implicitly convertible to Matcher<T>, which means that either
-                // M is a polymorphic matcher or Matcher<T> has an implicit constructor
+                // M is implicitly convertible to Matcher<Type>, which means that either
+                // M is a polymorphic matcher or Matcher<Type> has an implicit constructor
                 // from M.  In both cases using the implicit conversion will produce a
                 // matcher.
                 //
-                // Even if T has an implicit constructor from M, it won't be called because
-                // creating Matcher<T> would require a chain of two user-defined conversions
-                // (first to create T from M and then to create Matcher<T> from T).
+                // Even if Type has an implicit constructor from M, it won't be called because
+                // creating Matcher<Type> would require a chain of two user-defined conversions
+                // (first to create Type from M and then to create Matcher<Type> from Type).
                 return polymorphic_matcher_or_value;
             }
 
-            // M can't be implicitly converted to Matcher<T>, so M isn't a polymorphic
-            // matcher. It's a value of a type implicitly convertible to T. Use direct
+            // M can't be implicitly converted to Matcher<Type>, so M isn't a polymorphic
+            // matcher. It's a value of a type implicitly convertible to Type. Use direct
             // initialization to create a matcher.
             static Matcher<T> CastImpl(const M &value,
                                        std::false_type /* convertible_to_matcher */,
@@ -380,7 +380,7 @@ namespace testing {
                 return Matcher<T>(ImplicitCast_<T>(value));
             }
 
-            // M can't be implicitly converted to either Matcher<T> or T. Attempt to use
+            // M can't be implicitly converted to either Matcher<Type> or Type. Attempt to use
             // polymorphic matcher Eq(value) in this case.
             //
             // Note that we first attempt to perform an implicit cast on the value and
@@ -396,7 +396,7 @@ namespace testing {
         };
 
 // This more specialized version is used when MatcherCast()'s argument
-// is already a Matcher.  This only compiles when type T can be
+// is already a Matcher.  This only compiles when type Type can be
 // statically converted to type U.
         template<typename T, typename U>
         class MatcherCastImpl<T, Matcher<U>> {
@@ -475,7 +475,7 @@ namespace testing {
         template<template<typename...> class Derived, typename... Ts>
         class MatcherBaseImpl<Derived<Ts...>> {
         public:
-            // Mark the constructor explicit for single argument T to avoid implicit
+            // Mark the constructor explicit for single argument Type to avoid implicit
             // conversions.
             template<typename E = std::enable_if<sizeof...(Ts) == 1>,
                     typename E::type * = nullptr>
@@ -506,8 +506,8 @@ namespace testing {
     }  // namespace internal
 
 // In order to be safe and clear, casting between different matcher
-// types is done explicitly via MatcherCast<T>(m), which takes a
-// matcher m and returns a Matcher<T>.  It compiles only when T can be
+// types is done explicitly via MatcherCast<Type>(m), which takes a
+// matcher m and returns a Matcher<Type>.  It compiles only when Type can be
 // statically converted to the argument type of m.
     template<typename T, typename M>
     inline Matcher<T> MatcherCast(const M &matcher) {
@@ -523,23 +523,23 @@ namespace testing {
 
 // This overload handles monomorphic matchers.
 //
-// In general, if type T can be implicitly converted to type U, we can
-// safely convert a Matcher<U> to a Matcher<T> (i.e. Matcher is
+// In general, if type Type can be implicitly converted to type U, we can
+// safely convert a Matcher<U> to a Matcher<Type> (i.e. Matcher is
 // contravariant): just keep a copy of the original Matcher<U>, convert the
-// argument from type T to U, and then pass it to the underlying Matcher<U>.
-// The only exception is when U is a reference and T is not, as the
+// argument from type Type to U, and then pass it to the underlying Matcher<U>.
+// The only exception is when U is a reference and Type is not, as the
 // underlying Matcher<U> may be interested in the argument's address, which
-// is not preserved in the conversion from T to U.
+// is not preserved in the conversion from Type to U.
     template<typename T, typename U>
     inline Matcher<T> SafeMatcherCast(const Matcher<U> &matcher) {
-        // Enforce that T can be implicitly converted to U.
+        // Enforce that Type can be implicitly converted to U.
         static_assert(std::is_convertible<const T &, const U &>::value,
-                      "T must be implicitly convertible to U");
-        // Enforce that we are not converting a non-reference type T to a reference
+                      "Type must be implicitly convertible to U");
+        // Enforce that we are not converting a non-reference type Type to a reference
         // type U.
         static_assert(std::is_reference<T>::value || !std::is_reference<U>::value,
                       "cannot convert non reference arg to reference");
-        // In case both T and U are arithmetic types, enforce that the
+        // In case both Type and U are arithmetic types, enforce that the
         // conversion is not lossy.
         typedef GTEST_REMOVE_REFERENCE_AND_CONST_(T) RawT;
         typedef GTEST_REMOVE_REFERENCE_AND_CONST_(U) RawU;
@@ -552,7 +552,7 @@ namespace testing {
         return MatcherCast<T>(matcher);
     }
 
-// A<T>() returns a matcher that matches any value of type T.
+// A<Type>() returns a matcher that matches any value of type Type.
     template<typename T>
     Matcher<T> A();
 
@@ -740,8 +740,8 @@ namespace testing {
 
 // Implements _, a matcher that matches any value of any
 // type.  This is a polymorphic matcher, so we need a template type
-// conversion operator to make it appearing as a Matcher<T> for any
-// type T.
+// conversion operator to make it appearing as a Matcher<Type> for any
+// type Type.
         class AnythingMatcher {
         public:
             using is_gtest_matcher = void;
@@ -811,19 +811,19 @@ namespace testing {
         class RefMatcher<T &> {
             // Google Mock is a generic framework and thus needs to support
             // mocking any function types, including those that take non-const
-            // reference arguments.  Therefore the template parameter T (and
+            // reference arguments.  Therefore the template parameter Type (and
             // Super below) can be instantiated to either a const type or a
             // non-const type.
         public:
-            // RefMatcher() takes a T& instead of const T&, as we want the
+            // RefMatcher() takes a Type& instead of const Type&, as we want the
             // compiler to catch using Ref(const_value) as a matcher for a
             // non-const reference.
             explicit RefMatcher(T &x) : object_(x) {}  // NOLINT
 
             template<typename Super>
             operator Matcher<Super &>() const {
-                // By passing object_ (type T&) to Impl(), which expects a Super&,
-                // we make sure that Super is a super type of T.  In particular,
+                // By passing object_ (type Type&) to Impl(), which expects a Super&,
+                // we make sure that Super is a super type of Type.  In particular,
                 // this catches using Ref(const_value) as a matcher for a
                 // non-const reference, as you cannot implicitly convert a const
                 // reference to a non-const reference.
@@ -964,7 +964,7 @@ namespace testing {
         };
 
 // Implements the polymorphic HasSubstr(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<Type> as long as Type can be converted to a
 // string.
         template<typename StringType>
         class HasSubstrMatcher {
@@ -1018,7 +1018,7 @@ namespace testing {
         };
 
 // Implements the polymorphic StartsWith(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<Type> as long as Type can be converted to a
 // string.
         template<typename StringType>
         class StartsWithMatcher {
@@ -1072,7 +1072,7 @@ namespace testing {
         };
 
 // Implements the polymorphic EndsWith(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<Type> as long as Type can be converted to a
 // string.
         template<typename StringType>
         class EndsWithMatcher {
@@ -1126,7 +1126,7 @@ namespace testing {
         };
 
 // Implements the polymorphic WhenBase64Unescaped(matcher) matcher, which can be
-// used as a Matcher<T> as long as T can be converted to a string.
+// used as a Matcher<Type> as long as Type can be converted to a string.
         class WhenBase64UnescapedMatcher {
         public:
             using is_gtest_matcher = void;
@@ -1238,10 +1238,10 @@ namespace testing {
             static const char *Desc() { return "a pair where the first >= the second"; }
         };
 
-// Implements the Not(...) matcher for a particular argument type T.
+// Implements the Not(...) matcher for a particular argument type Type.
 // We do not nest it inside the NotMatcher class template, as that
 // will prevent different instantiations of NotMatcher from sharing
-// the same NotMatcherImpl<T> class.
+// the same NotMatcherImpl<Type> class.
         template<typename T>
         class NotMatcherImpl : public MatcherInterface<const T &> {
         public:
@@ -1283,9 +1283,9 @@ namespace testing {
         };
 
 // Implements the AllOf(m1, m2) matcher for a particular argument type
-// T. We do not nest it inside the BothOfMatcher class template, as
+// Type. We do not nest it inside the BothOfMatcher class template, as
 // that will prevent different instantiations of BothOfMatcher from
-// sharing the same BothOfMatcherImpl<T> class.
+// sharing the same BothOfMatcherImpl<Type> class.
         template<typename T>
         class AllOfMatcherImpl : public MatcherInterface<const T &> {
         public:
@@ -1345,7 +1345,7 @@ namespace testing {
 
 // VariadicMatcher is used for the variadic implementation of
 // AllOf(m_1, m_2, ...) and AnyOf(m_1, m_2, ...).
-// CombiningMatcher<T> is used to recursively combine the provided matchers
+// CombiningMatcher<Type> is used to recursively combine the provided matchers
 // (of type Args...).
         template<template<typename T> class CombiningMatcher, typename... Args>
         class VariadicMatcher {
@@ -1389,9 +1389,9 @@ namespace testing {
         using AllOfMatcher = VariadicMatcher<AllOfMatcherImpl, Args...>;
 
 // Implements the AnyOf(m1, m2) matcher for a particular argument type
-// T.  We do not nest it inside the AnyOfMatcher class template, as
+// Type.  We do not nest it inside the AnyOfMatcher class template, as
 // that will prevent different instantiations of AnyOfMatcher from
-// sharing the same EitherOfMatcherImpl<T> class.
+// sharing the same EitherOfMatcherImpl<Type> class.
         template<typename T>
         class AnyOfMatcherImpl : public MatcherInterface<const T &> {
         public:
@@ -1512,7 +1512,7 @@ namespace testing {
             explicit TrulyMatcher(Predicate pred) : predicate_(pred) {}
 
             // This method template allows Truly(pred) to be used as a matcher
-            // for type T where T is the argument type of predicate 'pred'.  The
+            // for type Type where Type is the argument type of predicate 'pred'.  The
             // argument is passed by reference as the predicate may be
             // interested in the address of the argument.
             template<typename T>
@@ -1549,7 +1549,7 @@ namespace testing {
             explicit MatcherAsPredicate(M matcher) : matcher_(matcher) {}
 
             // This template operator() allows Matches(m) to be used as a
-            // predicate on type T where m is a matcher on type T.
+            // predicate on type Type where m is a matcher on type Type.
             //
             // The argument x is passed by reference instead of by value, as
             // some matcher may be interested in its address (e.g. as in
@@ -1561,14 +1561,14 @@ namespace testing {
                 // allows us to write Matches(m) where m is a polymorphic matcher
                 // (e.g. Eq(5)).
                 //
-                // If we write Matcher<T>(matcher_).Matches(x) here, it won't
-                // compile when matcher_ has type Matcher<const T&>; if we write
-                // Matcher<const T&>(matcher_).Matches(x) here, it won't compile
-                // when matcher_ has type Matcher<T>; if we just write
+                // If we write Matcher<Type>(matcher_).Matches(x) here, it won't
+                // compile when matcher_ has type Matcher<const Type&>; if we write
+                // Matcher<const Type&>(matcher_).Matches(x) here, it won't compile
+                // when matcher_ has type Matcher<Type>; if we just write
                 // matcher_.Matches(x), it won't compile when matcher_ is
                 // polymorphic, e.g. Eq(5).
                 //
-                // MatcherCast<const T&>() is necessary for making the code work
+                // MatcherCast<const Type&>() is necessary for making the code work
                 // in all of the above situations.
                 return MatcherCast<const T &>(matcher_).Matches(x);
             }
@@ -1589,16 +1589,16 @@ namespace testing {
             // Google Test's EXPECT_PRED_FORMAT1() macro.
             template<typename T>
             AssertionResult operator()(const char *value_text, const T &x) const {
-                // We convert matcher_ to a Matcher<const T&> *now* instead of
+                // We convert matcher_ to a Matcher<const Type&> *now* instead of
                 // when the PredicateFormatterFromMatcher object was constructed,
                 // as matcher_ may be polymorphic (e.g. NotNull()) and we won't
                 // know which type to instantiate it to until we actually see the
                 // type of x here.
                 //
-                // We write SafeMatcherCast<const T&>(matcher_) instead of
-                // Matcher<const T&>(matcher_), as the latter won't compile when
-                // matcher_ has type Matcher<T> (e.g. An<int>()).
-                // We don't write MatcherCast<const T&> either, as that allows
+                // We write SafeMatcherCast<const Type&>(matcher_) instead of
+                // Matcher<const Type&>(matcher_), as the latter won't compile when
+                // matcher_ has type Matcher<Type> (e.g. An<int>()).
+                // We don't write MatcherCast<const Type&> either, as that allows
                 // potentially unsafe downcasting of the matcher argument.
                 const Matcher<const T &> matcher = SafeMatcherCast<const T &>(matcher_);
 
@@ -1680,7 +1680,7 @@ namespace testing {
                             << ", where max_abs_error is" << max_abs_error;
             }
 
-            // Implements floating point equality matcher as a Matcher<T>.
+            // Implements floating point equality matcher as a Matcher<Type>.
             template<typename T>
             class Impl : public MatcherInterface<T> {
             public:
@@ -1995,8 +1995,8 @@ namespace testing {
 
 #if GTEST_HAS_RTTI
 
-// Implements the WhenDynamicCastTo<T>(m) matcher that matches a pointer or
-// reference that matches inner_matcher when dynamic_cast<T> is applied.
+// Implements the WhenDynamicCastTo<Type>(m) matcher that matches a pointer or
+// reference that matches inner_matcher when dynamic_cast<Type> is applied.
 // The result of dynamic_cast<To> is forwarded to the inner matcher.
 // If To is a pointer and the cast fails, the inner matcher will receive NULL.
 // If To is a reference and the cast fails, this matcher returns false
@@ -2291,7 +2291,7 @@ namespace testing {
                     }
                     // Cannot pass the return value directly to MatchPrintAndExplain, which
                     // takes a non-const reference as argument.
-                    // Also, specifying template argument explicitly is needed because T could
+                    // Also, specifying template argument explicitly is needed because Type could
                     // be a non-const reference (e.g. Matcher<Uncopyable&>).
                     ResultType result =
                             CallableTraits<Callable>::template Invoke<T>(callable_, obj);
@@ -2684,7 +2684,7 @@ namespace testing {
                         if (listener->IsInterested()) {
                             StringMatchResultListener inner_listener;
                             // Create InnerMatcherArg as a temporarily object to avoid it outlives
-                            // *left and *right. Dereference or the conversion to `const T&` may
+                            // *left and *right. Dereference or the conversion to `const Type&` may
                             // return temp objects, e.g. for vector<bool>.
                             if (!mono_tuple_matcher_.MatchAndExplain(
                                     InnerMatcherArg(ImplicitCast_<const LhsValue &>(*left),
@@ -3194,83 +3194,83 @@ namespace testing {
         }
 
 #if defined(__cpp_structured_bindings) && __cpp_structured_bindings >= 201606
-                                                                                                                                template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<1>, char) {
+                                                                                                                                template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<1>, char) {
   const auto& [a] = t;
   return std::tie(a);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<2>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<2>, char) {
   const auto& [a, b] = t;
   return std::tie(a, b);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<3>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<3>, char) {
   const auto& [a, b, c] = t;
   return std::tie(a, b, c);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<4>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<4>, char) {
   const auto& [a, b, c, d] = t;
   return std::tie(a, b, c, d);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<5>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<5>, char) {
   const auto& [a, b, c, d, e] = t;
   return std::tie(a, b, c, d, e);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<6>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<6>, char) {
   const auto& [a, b, c, d, e, f] = t;
   return std::tie(a, b, c, d, e, f);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<7>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<7>, char) {
   const auto& [a, b, c, d, e, f, g] = t;
   return std::tie(a, b, c, d, e, f, g);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<8>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<8>, char) {
   const auto& [a, b, c, d, e, f, g, h] = t;
   return std::tie(a, b, c, d, e, f, g, h);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<9>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<9>, char) {
   const auto& [a, b, c, d, e, f, g, h, i] = t;
   return std::tie(a, b, c, d, e, f, g, h, i);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<10>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<10>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<11>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<11>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<12>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<12>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k, l] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k, l);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<13>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<13>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k, l, m] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k, l, m);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<14>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<14>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k, l, m, n] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k, l, m, n);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<15>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<15>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o);
 }
-template <typename T>
-auto UnpackStructImpl(const T& t, MakeIndexSequence<16>, char) {
+template <typename Type>
+auto UnpackStructImpl(const Type& t, MakeIndexSequence<16>, char) {
   const auto& [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p] = t;
   return std::tie(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p);
 }
@@ -4274,13 +4274,13 @@ auto UnpackStructImpl(const T& t, MakeIndexSequence<16>, char) {
 //   3. c-style has approved of using _ in this case.
     const internal::AnythingMatcher _ = {};
 
-// Creates a matcher that matches any value of the given type T.
+// Creates a matcher that matches any value of the given type Type.
     template<typename T>
     inline Matcher<T> A() {
         return _;
     }
 
-// Creates a matcher that matches any value of the given type T.
+// Creates a matcher that matches any value of the given type Type.
     template<typename T>
     inline Matcher<T> An() {
         return _;
@@ -4696,7 +4696,7 @@ auto UnpackStructImpl(const T& t, MakeIndexSequence<16>, char) {
         return internal::FloatingEq2Matcher<double>(max_abs_error, true);
     }
 
-// Creates a matcher that matches any value of type T that m doesn't
+// Creates a matcher that matches any value of type Type that m doesn't
 // match.
     template<typename InnerMatcher>
     inline internal::NotMatcher<InnerMatcher> Not(InnerMatcher m) {

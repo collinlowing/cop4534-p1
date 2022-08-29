@@ -412,41 +412,41 @@ GoogleTest defines the following classes for working with mocks.
 
 ### DefaultValue {#DefaultValue}
 
-`::testing::DefaultValue<T>`
+`::testing::DefaultValue<Type>`
 
-Allows a user to specify the default value for a type `T` that is both copyable
+Allows a user to specify the default value for a type `Type` that is both copyable
 and publicly destructible (i.e. anything that can be used as a function return
-type). For mock functions with a return type of `T`, this default value is
+type). For mock functions with a return type of `Type`, this default value is
 returned from function calls that do not specify an action.
 
 Provides the static methods `Set()`, `SetFactory()`, and `Clear()` to manage the
 default value:
 
 ```cpp
-// Sets the default value to be returned. T must be copy constructible.
-DefaultValue<T>::Set(value);
+// Sets the default value to be returned. Type must be copy constructible.
+DefaultValue<Type>::Set(value);
 
-// Sets a factory. Will be invoked on demand. T must be move constructible.
-T MakeT();
-DefaultValue<T>::SetFactory(&MakeT);
+// Sets a factory. Will be invoked on demand. Type must be move constructible.
+Type MakeT();
+DefaultValue<Type>::SetFactory(&MakeT);
 
 // Unsets the default value.
-DefaultValue<T>::Clear();
+DefaultValue<Type>::Clear();
 ```
 
 ### NiceMock {#NiceMock}
 
-`::testing::NiceMock<T>`
+`::testing::NiceMock<Type>`
 
 Represents a mock object that suppresses warnings on
 [uninteresting calls](../gmock_cook_book.md#uninteresting-vs-unexpected). The
-template parameter `T` is any mock class, except for another `NiceMock`,
+template parameter `Type` is any mock class, except for another `NiceMock`,
 `NaggyMock`, or `StrictMock`.
 
-Usage of `NiceMock<T>` is analogous to usage of `T`. `NiceMock<T>` is a subclass
-of `T`, so it can be used wherever an object of type `T` is accepted. In
-addition, `NiceMock<T>` can be constructed with any arguments that a constructor
-of `T` accepts.
+Usage of `NiceMock<Type>` is analogous to usage of `Type`. `NiceMock<Type>` is a subclass
+of `Type`, so it can be used wherever an object of type `Type` is accepted. In
+addition, `NiceMock<Type>` can be constructed with any arguments that a constructor
+of `Type` accepts.
 
 For example, the following code suppresses warnings on the mock `my_mock` of
 type `MockClass` if a method other than `DoSomething()` is called:
@@ -459,25 +459,25 @@ EXPECT_CALL(my_mock, DoSomething());
 ... code that uses my_mock ...
 ```
 
-`NiceMock<T>` only works for mock methods defined using the `MOCK_METHOD` macro
-directly in the definition of class `T`. If a mock method is defined in a base
-class of `T`, a warning might still be generated.
+`NiceMock<Type>` only works for mock methods defined using the `MOCK_METHOD` macro
+directly in the definition of class `Type`. If a mock method is defined in a base
+class of `Type`, a warning might still be generated.
 
-`NiceMock<T>` might not work correctly if the destructor of `T` is not virtual.
+`NiceMock<Type>` might not work correctly if the destructor of `Type` is not virtual.
 
 ### NaggyMock {#NaggyMock}
 
-`::testing::NaggyMock<T>`
+`::testing::NaggyMock<Type>`
 
 Represents a mock object that generates warnings on
 [uninteresting calls](../gmock_cook_book.md#uninteresting-vs-unexpected). The
-template parameter `T` is any mock class, except for another `NiceMock`,
+template parameter `Type` is any mock class, except for another `NiceMock`,
 `NaggyMock`, or `StrictMock`.
 
-Usage of `NaggyMock<T>` is analogous to usage of `T`. `NaggyMock<T>` is a
-subclass of `T`, so it can be used wherever an object of type `T` is accepted.
-In addition, `NaggyMock<T>` can be constructed with any arguments that a
-constructor of `T` accepts.
+Usage of `NaggyMock<Type>` is analogous to usage of `Type`. `NaggyMock<Type>` is a
+subclass of `Type`, so it can be used wherever an object of type `Type` is accepted.
+In addition, `NaggyMock<Type>` can be constructed with any arguments that a
+constructor of `Type` accepts.
 
 For example, the following code generates warnings on the mock `my_mock` of type
 `MockClass` if a method other than `DoSomething()` is called:
@@ -490,21 +490,21 @@ EXPECT_CALL(my_mock, DoSomething());
 ... code that uses my_mock ...
 ```
 
-Mock objects of type `T` by default behave the same way as `NaggyMock<T>`.
+Mock objects of type `Type` by default behave the same way as `NaggyMock<Type>`.
 
 ### StrictMock {#StrictMock}
 
-`::testing::StrictMock<T>`
+`::testing::StrictMock<Type>`
 
 Represents a mock object that generates test failures on
 [uninteresting calls](../gmock_cook_book.md#uninteresting-vs-unexpected). The
-template parameter `T` is any mock class, except for another `NiceMock`,
+template parameter `Type` is any mock class, except for another `NiceMock`,
 `NaggyMock`, or `StrictMock`.
 
-Usage of `StrictMock<T>` is analogous to usage of `T`. `StrictMock<T>` is a
-subclass of `T`, so it can be used wherever an object of type `T` is accepted.
-In addition, `StrictMock<T>` can be constructed with any arguments that a
-constructor of `T` accepts.
+Usage of `StrictMock<Type>` is analogous to usage of `Type`. `StrictMock<Type>` is a
+subclass of `Type`, so it can be used wherever an object of type `Type` is accepted.
+In addition, `StrictMock<Type>` can be constructed with any arguments that a
+constructor of `Type` accepts.
 
 For example, the following code generates a test failure on the mock `my_mock`
 of type `MockClass` if a method other than `DoSomething()` is called:
@@ -517,11 +517,11 @@ EXPECT_CALL(my_mock, DoSomething());
 ... code that uses my_mock ...
 ```
 
-`StrictMock<T>` only works for mock methods defined using the `MOCK_METHOD`
-macro directly in the definition of class `T`. If a mock method is defined in a
-base class of `T`, a failure might not be generated.
+`StrictMock<Type>` only works for mock methods defined using the `MOCK_METHOD`
+macro directly in the definition of class `Type`. If a mock method is defined in a
+base class of `Type`, a failure might not be generated.
 
-`StrictMock<T>` might not work correctly if the destructor of `T` is not
+`StrictMock<Type>` might not work correctly if the destructor of `Type` is not
 virtual.
 
 ### Sequence {#Sequence}

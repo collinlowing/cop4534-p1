@@ -30,9 +30,9 @@
 // Google Test - The Google C++ Testing and Mocking Framework
 //
 // This file implements a universal value printer that can print a
-// value of any type T:
+// value of any type Type:
 //
-//   void ::testing::internal::UniversalPrinter<T>::Print(value, ostream_ptr);
+//   void ::testing::internal::UniversalPrinter<Type>::Print(value, ostream_ptr);
 //
 // It uses the << operator when possible, and prints the bytes in the
 // object otherwise.  A user can override its behavior for a class

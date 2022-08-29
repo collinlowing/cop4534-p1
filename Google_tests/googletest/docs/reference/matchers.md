@@ -47,7 +47,7 @@ Matcher                     | Description
 | `IsNull()`             | `argument` is a `NULL` pointer (raw or smart).      |
 | `NotNull()`            | `argument` is a non-null pointer (raw or smart).    |
 | `Optional(m)`          | `argument` is `optional<>` that contains a value matching `m`. (For testing whether an `optional<>` is set, check for equality with `nullopt`. You may need to use `Eq(nullopt)` if the inner type doesn't have `==`.)|
-| `VariantWith<T>(m)`    | `argument` is `variant<>` that holds the alternative of type T with a value matching `m`. |
+| `VariantWith<Type>(m)`    | `argument` is `variant<>` that holds the alternative of type Type with a value matching `m`. |
 | `Ref(variable)`        | `argument` is a reference to `variable`.            |
 | `TypedEq<type>(value)` | `argument` has type `type` and is equal to `value`. You may need to use this instead of `Eq(value)` when the mock function is overloaded. |
 
@@ -144,12 +144,12 @@ some* permutation of the elements, each element matches an `ei` (for a different
 * These matchers can also match:
     1. a native array passed by reference (e.g. in `Foo(const int (&a)[5])`),
        and
-    2. an array passed as a pointer and a count (e.g. in `Bar(const T* buffer,
+    2. an array passed as a pointer and a count (e.g. in `Bar(const Type* buffer,
        int len)` -- see [Multi-argument Matchers](#MultiArgMatchers)).
 * The array being matched may be multi-dimensional (i.e. its elements can be
   arrays).
 * `m` in `Pointwise(m, ...)` and `UnorderedPointwise(m, ...)` should be a
-  matcher for `::std::tuple<T, U>` where `T` and `U` are the element type of
+  matcher for `::std::tuple<Type, U>` where `Type` and `U` are the element type of
   the actual container and the expected container, respectively. For example,
   to compare two `Foo` containers where `Foo` doesn't support `operator==`,
   one might write:
@@ -212,7 +212,7 @@ class_. The method `property()` must take no argument and be declared as `const`
 | `Address(m)`              | the result of `std::addressof(argument)` matches `m`. |
 | `Pointee(m)`              | `argument` (either a smart pointer or a raw pointer) points to a value that matches matcher `m`. |
 | `Pointer(m)`              | `argument` (either a smart pointer or a raw pointer) contains a pointer that matches `m`. `m` will match against the raw pointer regardless of the type of `argument`. |
-| `WhenDynamicCastTo<T>(m)` | when `argument` is passed through `dynamic_cast<T>()`, it matches matcher `m`. |
+| `WhenDynamicCastTo<Type>(m)` | when `argument` is passed through `dynamic_cast<Type>()`, it matches matcher `m`. |
 
 ## Multi-argument Matchers {#MultiArgMatchers}
 
@@ -254,8 +254,8 @@ You can make a matcher from one or more other matchers:
 
 | Matcher                 | Description                           |
 | :---------------------- | :------------------------------------ |
-| `MatcherCast<T>(m)`     | casts matcher `m` to type `Matcher<T>`. |
-| `SafeMatcherCast<T>(m)` | [safely casts](../gmock_cook_book.md#SafeMatcherCast) matcher `m` to type `Matcher<T>`. |
+| `MatcherCast<Type>(m)`     | casts matcher `m` to type `Matcher<Type>`. |
+| `SafeMatcherCast<Type>(m)` | [safely casts](../gmock_cook_book.md#SafeMatcherCast) matcher `m` to type `Matcher<Type>`. |
 | `Truly(predicate)`      | `predicate(argument)` returns something considered by C++ to be true, where `predicate` is a function or functor. |
 
 `AddressSatisfies(callback)` and `Truly(callback)` take ownership of `callback`,

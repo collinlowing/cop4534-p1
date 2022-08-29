@@ -4,20 +4,22 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "../HashTable.hpp"
-#include "MockNode.hpp"
+#include "../StringHashTable.hpp"
 
 
-// get data
-TEST(HashTableTests, mockNode) {
-    MockNode node;
+// tests mock hash() function
+/*
+TEST(HashTableTests, TestSearchNode) {
+    std::size_t numBuckets = 11;
+    StringHashTable hashTable = StringHashTable(numBuckets);
+    std::string data = "name";
     std::string key = "password";
-    int expectedHash = std::hash<std::string>{}(key);
 
-    EXPECT_CALL(node, hash())
-        .Times(testing::AtLeast(1))
-        .WillRepeatedly(testing::Return(expectedHash));
+    hashTable.add(data, key);
 
-    int testedHash = node.hash();
-    EXPECT_EQ(testedHash, expectedHash);
-}
+    StringNode* searchedNode;
+    searchedNode = hashTable.search(key);
+    std::string expectedKey = searchedNode->getKey();
+
+    EXPECT_EQ(expectedKey, key);
+}*/

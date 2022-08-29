@@ -1017,7 +1017,7 @@ inline void FlushInfoLog() { fflush(nullptr); }
   if (const int gtest_error = (posix_call))    \
   GTEST_LOG_(FATAL) << #posix_call << "failed with error " << gtest_error
 
-// Transforms "T" into "const T&" according to standard reference collapsing
+// Transforms "Type" into "const Type&" according to standard reference collapsing
 // rules (this is only needed as a backport for C++98 compilers that do not
 // support reference collapsing). Specifically, it transforms:
 //
@@ -1027,7 +1027,7 @@ inline void FlushInfoLog() { fflush(nullptr); }
 //   const char&  ==> const char&
 //
 // Note that the non-const reference will not have "const" added. This is
-// standard, and necessary so that "T" can always bind to "const T&".
+// standard, and necessary so that "Type" can always bind to "const Type&".
 template <typename T>
 struct ConstRef {
   typedef const T& type;
@@ -1037,7 +1037,7 @@ struct ConstRef<T&> {
   typedef T& type;
 };
 
-// The argument T must depend on some template parameters.
+// The argument Type must depend on some template parameters.
 #define GTEST_REFERENCE_TO_CONST_(T) \
   typename ::testing::internal::ConstRef<T>::type
 
@@ -1078,7 +1078,7 @@ inline To ImplicitCast_(To x) {
 // instead.  Thus, it's important to test in debug mode to make sure
 // the cast is legal!
 //    This is the only place in the code we should use dynamic_cast<>.
-// In particular, you SHOULDN'T be using dynamic_cast<> in order to
+// In particular, you SHOULDN'Type be using dynamic_cast<> in order to
 // do RTTI (eg code like this:
 //    if (dynamic_cast<Subclass1>(foo)) HandleASubclass1Object(foo);
 //    if (dynamic_cast<Subclass2>(foo)) HandleASubclass2Object(foo);
@@ -1087,7 +1087,7 @@ inline To ImplicitCast_(To x) {
 // This relatively ugly name is intentional. It prevents clashes with
 // similar functions users may have (e.g., down_cast). The internal
 // namespace alone is not enough because the function can be found by ADL.
-template <typename To, typename From>  // use like this: DownCast_<T*>(foo);
+template <typename To, typename From>  // use like this: DownCast_<Type*>(foo);
 inline To DownCast_(From* f) {         // so we only accept pointers
   // Ensures that To is a sub-type of From *.  This test is here only
   // for compile-time type checking, and has no overhead in an
@@ -1408,7 +1408,7 @@ class GTestMutexLock {
 
 typedef GTestMutexLock MutexLock;
 
-// Base class for ValueHolder<T>.  Allows a caller to hold and delete a value
+// Base class for ValueHolder<Type>.  Allows a caller to hold and delete a value
 // without knowing its type.
 class ThreadLocalValueHolderBase {
  public:
@@ -1419,9 +1419,9 @@ class ThreadLocalValueHolderBase {
 // regardless of its parameter type.
 class ThreadLocalBase {
  public:
-  // Creates a new ValueHolder<T> object holding a default value passed to
-  // this ThreadLocal<T>'s constructor and returns it.  It is the caller's
-  // responsibility not to call this when the ThreadLocal<T> instance already
+  // Creates a new ValueHolder<Type> object holding a default value passed to
+  // this ThreadLocal<Type>'s constructor and returns it.  It is the caller's
+  // responsibility not to call this when the ThreadLocal<Type> instance already
   // has a value on the current thread.
   virtual ThreadLocalValueHolderBase* NewValueForCurrentThread() const = 0;
 
@@ -1468,25 +1468,25 @@ class GTEST_API_ ThreadWithParamBase {
 };
 
 // Helper class for testing Google Test's multi-threading constructs.
-template <typename T>
+template <typename Type>
 class ThreadWithParam : public ThreadWithParamBase {
  public:
-  typedef void UserThreadFunc(T);
+  typedef void UserThreadFunc(Type);
 
-  ThreadWithParam(UserThreadFunc* func, T param, Notification* thread_can_start)
+  ThreadWithParam(UserThreadFunc* func, Type param, Notification* thread_can_start)
       : ThreadWithParamBase(new RunnableImpl(func, param), thread_can_start) {}
   virtual ~ThreadWithParam() {}
 
  private:
   class RunnableImpl : public Runnable {
    public:
-    RunnableImpl(UserThreadFunc* func, T param) : func_(func), param_(param) {}
+    RunnableImpl(UserThreadFunc* func, Type param) : func_(func), param_(param) {}
     virtual ~RunnableImpl() {}
     virtual void Run() { func_(param_); }
 
    private:
     UserThreadFunc* const func_;
-    const T param_;
+    const Type param_;
 
     RunnableImpl(const RunnableImpl&) = delete;
     RunnableImpl& operator=(const RunnableImpl&) = delete;
@@ -1510,8 +1510,8 @@ class ThreadWithParam : public ThreadWithParamBase {
 //   tl.set(200);
 //   EXPECT_EQ(200, tl.get());
 //
-// The template type argument T must have a public copy constructor.
-// In addition, the default ThreadLocal constructor requires T to have
+// The template type argument Type must have a public copy constructor.
+// In addition, the default ThreadLocal constructor requires Type to have
 // a public default constructor.
 //
 // The users of a TheadLocal instance have to make sure that all but one
@@ -1523,37 +1523,37 @@ class ThreadWithParam : public ThreadWithParamBase {
 // will die after main() has returned.  Therefore, no per-thread
 // object managed by Google Test will be leaked as long as all threads
 // using Google Test have exited when main() returns.
-template <typename T>
+template <typename Type>
 class ThreadLocal : public ThreadLocalBase {
  public:
   ThreadLocal() : default_factory_(new DefaultValueHolderFactory()) {}
-  explicit ThreadLocal(const T& value)
+  explicit ThreadLocal(const Type& value)
       : default_factory_(new InstanceValueHolderFactory(value)) {}
 
   ~ThreadLocal() override { ThreadLocalRegistry::OnThreadLocalDestroyed(this); }
 
-  T* pointer() { return GetOrCreateValue(); }
-  const T* pointer() const { return GetOrCreateValue(); }
-  const T& get() const { return *pointer(); }
-  void set(const T& value) { *pointer() = value; }
+  Type* pointer() { return GetOrCreateValue(); }
+  const Type* pointer() const { return GetOrCreateValue(); }
+  const Type& get() const { return *pointer(); }
+  void set(const Type& value) { *pointer() = value; }
 
  private:
-  // Holds a value of T.  Can be deleted via its base class without the caller
-  // knowing the type of T.
+  // Holds a value of Type.  Can be deleted via its base class without the caller
+  // knowing the type of Type.
   class ValueHolder : public ThreadLocalValueHolderBase {
    public:
     ValueHolder() : value_() {}
-    explicit ValueHolder(const T& value) : value_(value) {}
+    explicit ValueHolder(const Type& value) : value_(value) {}
 
-    T* pointer() { return &value_; }
+    Type* pointer() { return &value_; }
 
    private:
-    T value_;
+    Type value_;
     ValueHolder(const ValueHolder&) = delete;
     ValueHolder& operator=(const ValueHolder&) = delete;
   };
 
-  T* GetOrCreateValue() const {
+  Type* GetOrCreateValue() const {
     return static_cast<ValueHolder*>(
                ThreadLocalRegistry::GetValueOnCurrentThread(this))
         ->pointer();
@@ -1587,13 +1587,13 @@ class ThreadLocal : public ThreadLocalBase {
 
   class InstanceValueHolderFactory : public ValueHolderFactory {
    public:
-    explicit InstanceValueHolderFactory(const T& value) : value_(value) {}
+    explicit InstanceValueHolderFactory(const Type& value) : value_(value) {}
     ValueHolder* MakeNewHolder() const override {
       return new ValueHolder(value_);
     }
 
    private:
-    const T value_;  // The value for each thread.
+    const Type value_;  // The value for each thread.
 
     InstanceValueHolderFactory(const InstanceValueHolderFactory&) = delete;
     InstanceValueHolderFactory& operator=(const InstanceValueHolderFactory&) =
@@ -1704,7 +1704,7 @@ typedef GTestMutexLock MutexLock;
 
 // pthread_key_create() requires DeleteThreadLocalValue() to have
 // C-linkage.  Therefore it cannot be templatized to access
-// ThreadLocal<T>.  Hence the need for class
+// ThreadLocal<Type>.  Hence the need for class
 // ThreadLocalValueHolderBase.
 class ThreadLocalValueHolderBase {
  public:
@@ -1742,7 +1742,7 @@ class GTEST_API_ ThreadLocal {
   void set(const T& value) { *pointer() = value; }
 
  private:
-  // Holds a value of type T.
+  // Holds a value of type Type.
   class ValueHolder : public ThreadLocalValueHolderBase {
    public:
     ValueHolder() : value_() {}
@@ -1857,18 +1857,18 @@ class GTestMutexLock {
 
 typedef GTestMutexLock MutexLock;
 
-template <typename T>
+template <typename Type>
 class GTEST_API_ ThreadLocal {
  public:
   ThreadLocal() : value_() {}
-  explicit ThreadLocal(const T& value) : value_(value) {}
-  T* pointer() { return &value_; }
-  const T* pointer() const { return &value_; }
-  const T& get() const { return value_; }
-  void set(const T& value) { value_ = value; }
+  explicit ThreadLocal(const Type& value) : value_(value) {}
+  Type* pointer() { return &value_; }
+  const Type* pointer() const { return &value_; }
+  const Type& get() const { return value_; }
+  void set(const Type& value) { value_ = value; }
 
  private:
-  T value_;
+  Type value_;
 };
 
 #endif  // GTEST_IS_THREADSAFE
@@ -2324,8 +2324,8 @@ using Any = ::std::any;
 #include "absl/types/optional.h"
 namespace testing {
 namespace internal {
-template <typename T>
-using Optional = ::absl::optional<T>;
+template <typename Type>
+using Optional = ::absl::optional<Type>;
 inline ::absl::nullopt_t Nullopt() { return ::absl::nullopt; }
 }  // namespace internal
 }  // namespace testing
@@ -2338,8 +2338,8 @@ inline ::absl::nullopt_t Nullopt() { return ::absl::nullopt; }
 #include <optional>
 namespace testing {
 namespace internal {
-template <typename T>
-using Optional = ::std::optional<T>;
+template <typename Type>
+using Optional = ::std::optional<Type>;
 inline ::std::nullopt_t Nullopt() { return ::std::nullopt; }
 }  // namespace internal
 }  // namespace testing
@@ -2384,8 +2384,8 @@ using StringView = ::std::string_view;
 #include "absl/types/variant.h"
 namespace testing {
 namespace internal {
-template <typename... T>
-using Variant = ::absl::variant<T...>;
+template <typename... Type>
+using Variant = ::absl::variant<Type...>;
 }  // namespace internal
 }  // namespace testing
 #else
@@ -2397,8 +2397,8 @@ using Variant = ::absl::variant<T...>;
 #include <variant>
 namespace testing {
 namespace internal {
-template <typename... T>
-using Variant = ::std::variant<T...>;
+template <typename... Type>
+using Variant = ::std::variant<Type...>;
 }  // namespace internal
 }  // namespace testing
 // The case where absl is configured NOT to alias std::variant is not supported.

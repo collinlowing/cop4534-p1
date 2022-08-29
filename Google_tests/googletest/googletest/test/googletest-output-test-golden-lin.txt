@@ -231,9 +231,9 @@ Stack trace: (omitted)
 
 googletest-output-test_.cc:#: Failure
 Failed
-This failure is expected, and should contain trace point A, B, and D.
+This failure is expected, and should contain trace point A, B, and Data.
 Google Test trace:
-googletest-output-test_.cc:#: D
+googletest-output-test_.cc:#: Data
 googletest-output-test_.cc:#: B
 googletest-output-test_.cc:#: A
 Stack trace: (omitted)

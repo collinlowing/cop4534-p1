@@ -214,9 +214,9 @@ template, `StaticAssertTypeEq<T1, T2>()` is effective only if the function is
 instantiated. For example, given:
 
 ```c++
-template <typename T> class Foo {
+template <typename Type> class Foo {
  public:
-  void Bar() { testing::StaticAssertTypeEq<int, T>(); }
+  void Bar() { testing::StaticAssertTypeEq<int, Type>(); }
 };
 ```
 
@@ -500,7 +500,7 @@ Expression | Meaning
 ---------- | --------------------------------------------------------------
 `c`        | matches any literal character `c`
 `\\d`      | matches any decimal digit
-`\\D`      | matches any character that's not a decimal digit
+`\\Data`      | matches any character that's not a decimal digit
 `\\f`      | matches `\f`
 `\\n`      | matches `\n`
 `\\r`      | matches `\r`
@@ -928,10 +928,10 @@ class FooTest : public testing::Test {
   void TearDown() override { ... }
 
   // Some expensive resource shared by all tests.
-  static T* shared_resource_;
+  static Type* shared_resource_;
 };
 
-T* FooTest::shared_resource_ = nullptr;
+Type* FooTest::shared_resource_ = nullptr;
 
 TEST_F(FooTest, Test1) {
   ... you can refer to shared_resource_ here ...
@@ -1022,11 +1022,11 @@ number of situations, for example:
 ### How to Write Value-Parameterized Tests
 
 To write value-parameterized tests, first you should define a fixture class. It
-must be derived from both `testing::Test` and `testing::WithParamInterface<T>`
-(the latter is a pure interface), where `T` is the type of your parameter
+must be derived from both `testing::Test` and `testing::WithParamInterface<Type>`
+(the latter is a pure interface), where `Type` is the type of your parameter
 values. For convenience, you can just derive the fixture class from
-`testing::TestWithParam<T>`, which itself is derived from both `testing::Test`
-and `testing::WithParamInterface<T>`. `T` can be any copyable type. If it's a
+`testing::TestWithParam<Type>`, which itself is derived from both `testing::Test`
+and `testing::WithParamInterface<Type>`. `Type` can be any copyable type. If it's a
 raw pointer, you are responsible for managing the lifespan of the pointed
 values.
 
@@ -1040,7 +1040,7 @@ class FooTest :
     public testing::TestWithParam<const char*> {
   // You can implement all the usual fixture class members here.
   // To access the test parameter, call GetParam() from class
-  // TestWithParam<T>.
+  // TestWithParam<Type>.
 };
 
 // Or, when you want to add parameters to a pre-existing fixture class:
@@ -1060,7 +1060,7 @@ prefer to think.
 ```c++
 TEST_P(FooTest, DoesBlah) {
   // Inside a test, access the test parameter with the GetParam() method
-  // of the TestWithParam<T> class:
+  // of the TestWithParam<Type> class:
   EXPECT_TRUE(foo.Blah(GetParam()));
   ...
 }
@@ -1246,13 +1246,13 @@ First, define a fixture class template. It should be parameterized by a type.
 Remember to derive it from `::testing::Test`:
 
 ```c++
-template <typename T>
+template <typename Type>
 class FooTest : public testing::Test {
  public:
   ...
-  using List = std::list<T>;
-  static T shared_;
-  T value_;
+  using List = std::list<Type>;
+  static Type shared_;
+  Type value_;
 };
 ```
 
@@ -1314,7 +1314,7 @@ example:
 First, define a fixture class template, as we did with typed tests:
 
 ```c++
-template <typename T>
+template <typename Type>
 class FooTest : public testing::Test {
   void DoSomethingInteresting();
   ...

@@ -61,8 +61,8 @@ build CMakeFiles/cop4534_p1.dir/Cipher.cpp.o: CXX_COMPILER__cop4534_p1_Debug /ho
   OBJECT_DIR = CMakeFiles/cop4534_p1.dir
   OBJECT_FILE_DIR = CMakeFiles/cop4534_p1.dir
 
-build CMakeFiles/cop4534_p1.dir/HashTable.cpp.o: CXX_COMPILER__cop4534_p1_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/HashTable.cpp || cmake_object_order_depends_target_cop4534_p1
-  DEP_FILE = CMakeFiles/cop4534_p1.dir/HashTable.cpp.o.d
+build CMakeFiles/cop4534_p1.dir/StringHashTable.cpp.o: CXX_COMPILER__cop4534_p1_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/StringHashTable.cpp || cmake_object_order_depends_target_cop4534_p1
+  DEP_FILE = CMakeFiles/cop4534_p1.dir/StringHashTable.cpp.o.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles/cop4534_p1.dir
   OBJECT_FILE_DIR = CMakeFiles/cop4534_p1.dir
@@ -87,7 +87,7 @@ build CMakeFiles/cop4534_p1.dir/StringNode.cpp.o: CXX_COMPILER__cop4534_p1_Debug
 #############################################
 # Link the executable cop4534_p1
 
-build cop4534_p1: CXX_EXECUTABLE_LINKER__cop4534_p1_Debug CMakeFiles/cop4534_p1.dir/main.cpp.o CMakeFiles/cop4534_p1.dir/Cipher.cpp.o CMakeFiles/cop4534_p1.dir/HashTable.cpp.o CMakeFiles/cop4534_p1.dir/Parser.cpp.o CMakeFiles/cop4534_p1.dir/StringNode.cpp.o
+build cop4534_p1: CXX_EXECUTABLE_LINKER__cop4534_p1_Debug CMakeFiles/cop4534_p1.dir/main.cpp.o CMakeFiles/cop4534_p1.dir/Cipher.cpp.o CMakeFiles/cop4534_p1.dir/StringHashTable.cpp.o CMakeFiles/cop4534_p1.dir/Parser.cpp.o CMakeFiles/cop4534_p1.dir/StringNode.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/cop4534_p1.dir
   POST_BUILD = :
@@ -189,6 +189,13 @@ build Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o: CXX_COMP
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir/__
 
+build Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringHashTable.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/StringHashTable.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringHashTable.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
+  OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
+  OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir/__
+
 build Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Google_tests/testCipher.cpp || cmake_object_order_depends_target_Google_Tests_run
   DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o.d
   FLAGS = -g -std=gnu++14
@@ -210,6 +217,13 @@ build Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o: CXX_COM
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
   OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
 
+build Google_tests/CMakeFiles/Google_Tests_run.dir/testStringHasher.cpp.o: CXX_COMPILER__Google_Tests_run_Debug /home/cel/Data$ Structures$ and$ Algorithms$ II/cop4534-p1/Google_tests/testStringHasher.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = Google_tests/CMakeFiles/Google_Tests_run.dir/testStringHasher.cpp.o.d
+  FLAGS = -g -std=gnu++14
+  INCLUDES = -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googletest" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock/include" -isystem "/home/cel/Data Structures and Algorithms II/cop4534-p1/Google_tests/googletest/googlemock"
+  OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
+  OBJECT_FILE_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Google_Tests_run
@@ -218,7 +232,7 @@ build Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o: CXX_COM
 #############################################
 # Link the executable Google_tests/Google_Tests_run
 
-build Google_tests/Google_Tests_run: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgmock.a lib/libgmock_main.a lib/libgmock.a lib/libgtest.a || lib/libgmock.a lib/libgmock_main.a lib/libgtest.a lib/libgtest_main.a
+build Google_tests/Google_Tests_run: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug Google_tests/CMakeFiles/Google_Tests_run.dir/__/Cipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringNode.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/__/StringHashTable.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testCipher.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testHashTable.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testStringNode.cpp.o Google_tests/CMakeFiles/Google_Tests_run.dir/testStringHasher.cpp.o | lib/libgtest.a lib/libgtest_main.a lib/libgmock.a lib/libgmock_main.a lib/libgmock.a lib/libgtest.a || lib/libgmock.a lib/libgmock_main.a lib/libgtest.a lib/libgtest_main.a
   FLAGS = -g
   LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgmock.a  lib/libgmock_main.a  lib/libgmock.a  lib/libgtest.a
   OBJECT_DIR = Google_tests/CMakeFiles/Google_Tests_run.dir

@@ -131,7 +131,7 @@ class IgnoredValue {
   // doesn't try to remember anything about the argument.  We
   // deliberately omit the 'explicit' keyword in order to allow the
   // conversion to be implicit.
-  // Disable the conversion if T already has a magical conversion operator.
+  // Disable the conversion if Type already has a magical conversion operator.
   // Otherwise we get ambiguity.
   template <typename T,
             typename std::enable_if<!std::is_convertible<T, Sink>::value,
@@ -388,7 +388,7 @@ class FloatingPoint {
   FloatingPointUnion u_;
 };
 
-// We cannot use std::numeric_limits<T>::max() as it clashes with the max()
+// We cannot use std::numeric_limits<Type>::max() as it clashes with the max()
 // macro defined by <windows.h>.
 template <>
 inline float FloatingPoint<float>::Max() {
@@ -417,20 +417,20 @@ class TypeIdHelper {
  public:
   // dummy_ must not have a const type.  Otherwise an overly eager
   // compiler (e.g. MSVC 7.1 & 8.0) may try to merge
-  // TypeIdHelper<T>::dummy_ for different Ts as an "optimization".
+  // TypeIdHelper<Type>::dummy_ for different Ts as an "optimization".
   static bool dummy_;
 };
 
 template <typename T>
 bool TypeIdHelper<T>::dummy_ = false;
 
-// GetTypeId<T>() returns the ID of type T.  Different values will be
+// GetTypeId<Type>() returns the ID of type Type.  Different values will be
 // returned for different types.  Calling the function twice with the
 // same type argument is guaranteed to return the same ID.
 template <typename T>
 TypeId GetTypeId() {
   // The compiler is required to allocate a different
-  // TypeIdHelper<T>::dummy_ variable for each T used to instantiate
+  // TypeIdHelper<Type>::dummy_ variable for each Type used to instantiate
   // the template.  Therefore, the address of dummy_ is guaranteed to
   // be unique.
   return &(TypeIdHelper<T>::dummy_);
@@ -506,7 +506,7 @@ inline SetUpTearDownSuiteFuncType GetNotDefaultOrNull(
 }
 
 template <typename T>
-//  Note that SuiteApiResolver inherits from T because
+//  Note that SuiteApiResolver inherits from Type because
 //  SetUpTestSuite()/TearDownTestSuite() could be protected. This way
 //  SuiteApiResolver can access them.
 struct SuiteApiResolver : T {
@@ -532,7 +532,7 @@ struct SuiteApiResolver : T {
 #else
     (void)(filename);
     (void)(line_num);
-    return &T::SetUpTestSuite;
+    return &Type::SetUpTestSuite;
 #endif
   }
 
@@ -553,7 +553,7 @@ struct SuiteApiResolver : T {
 #else
     (void)(filename);
     (void)(line_num);
-    return &T::TearDownTestSuite;
+    return &Type::TearDownTestSuite;
 #endif
   }
 };
@@ -887,8 +887,8 @@ class GTEST_API_ Random {
 #define GTEST_REMOVE_REFERENCE_AND_CONST_(T) \
   typename std::remove_const<typename std::remove_reference<T>::type>::type
 
-// HasDebugStringAndShortDebugString<T>::value is a compile-time bool constant
-// that's true if and only if T has methods DebugString() and ShortDebugString()
+// HasDebugStringAndShortDebugString<Type>::value is a compile-time bool constant
+// that's true if and only if Type has methods DebugString() and ShortDebugString()
 // that return std::string.
 template <typename T>
 class HasDebugStringAndShortDebugString {
@@ -957,7 +957,7 @@ IsNotContainer IsContainerTest(long /* dummy */) {
   return '\0';
 }
 
-// Trait to detect whether a type T is a hash table.
+// Trait to detect whether a type Type is a hash table.
 // The heuristic used is that the type contains an inner type `hasher` and does
 // not contain an inner type `reverse_iterator`.
 // If the container is iterable in reverse, then order might actually matter.
@@ -1270,7 +1270,7 @@ struct FlatTupleBase<FlatTuple<T...>, IndexSequence<Idx...>>
 // instantiation depth of more than 10x the number of elements in some
 // implementations.
 // FlatTuple and ElemFromList are not recursive and have a fixed depth
-// regardless of T...
+// regardless of Type...
 // MakeIndexSequence, on the other hand, it is recursive but with an
 // instantiation depth of O(ln(N)).
 template <typename... T>

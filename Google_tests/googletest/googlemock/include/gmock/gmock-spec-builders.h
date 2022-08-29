@@ -1344,9 +1344,9 @@ namespace testing {
         };  // class MockSpec
 
 // Wrapper type for generically holding an ordinary value or lvalue reference.
-// If T is not a reference type, it must be copyable or movable.
-// ReferenceOrValueWrapper<T> is movable, and will also be copyable unless
-// T is a move-only value type (which means that it will always be copyable
+// If Type is not a reference type, it must be copyable or movable.
+// ReferenceOrValueWrapper<Type> is movable, and will also be copyable unless
+// Type is a move-only value type (which means that it will always be copyable
 // if the current platform does not support move semantics).
 //
 // The primary template defines handling for values, but function header
@@ -1365,7 +1365,7 @@ namespace testing {
 
             // Provides nondestructive access to the underlying value/reference.
             // Always returns a const reference (more precisely,
-            // const std::add_lvalue_reference<T>::type). The behavior of calling this
+            // const std::add_lvalue_reference<Type>::type). The behavior of calling this
             // after calling Unwrap on the same object is unspecified.
             const T &Peek() const { return value_; }
 
@@ -1396,7 +1396,7 @@ namespace testing {
         template<typename T>
         void PrintAsActionResult(const T &result, std::ostream &os) {
             os << "\n          Returns: ";
-            // T may be a reference type, so we don't use UniversalPrint().
+            // Type may be a reference type, so we don't use UniversalPrint().
             UniversalPrinter<T>::Print(result, &os);
         }
 

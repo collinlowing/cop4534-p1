@@ -926,16 +926,16 @@ is nothing really wrong with using a `Matcher<long>` to match an `int` - after
 all, we can first convert the `int` argument to a `long` losslessly before
 giving it to the matcher.
 
-To support this need, gMock gives you the `SafeMatcherCast<T>(m)` function. It
-casts a matcher `m` to type `Matcher<T>`. To ensure safety, gMock checks that
+To support this need, gMock gives you the `SafeMatcherCast<Type>(m)` function. It
+casts a matcher `m` to type `Matcher<Type>`. To ensure safety, gMock checks that
 (let `U` be the type `m` accepts :
 
-1. Type `T` can be *implicitly* cast to type `U`;
-2. When both `T` and `U` are built-in arithmetic types (`bool`, integers, and
-   floating-point numbers), the conversion from `T` to `U` is not lossy (in
-   other words, any value representable by `T` can also be represented by `U`);
+1. Type `Type` can be *implicitly* cast to type `U`;
+2. When both `Type` and `U` are built-in arithmetic types (`bool`, integers, and
+   floating-point numbers), the conversion from `Type` to `U` is not lossy (in
+   other words, any value representable by `Type` can also be represented by `U`);
    and
-3. When `U` is a reference, `T` must also be a reference (as the underlying
+3. When `U` is a reference, `Type` must also be a reference (as the underlying
    matcher may be interested in the address of the `U` value).
 
 The code won't compile if any of these conditions isn't met.
@@ -960,9 +960,9 @@ class MockFoo : public Foo {
   EXPECT_CALL(foo, DoThis(SafeMatcherCast<Derived*>(m)));
 ```
 
-If you find `SafeMatcherCast<T>(m)` too limiting, you can use a similar function
-`MatcherCast<T>(m)`. The difference is that `MatcherCast` works as long as you
-can `static_cast` type `T` to type `U`.
+If you find `SafeMatcherCast<Type>(m)` too limiting, you can use a similar function
+`MatcherCast<Type>(m)`. The difference is that `MatcherCast` works as long as you
+can `static_cast` type `Type` to type `U`.
 
 `MatcherCast` essentially lets you bypass C++'s type system (`static_cast` isn't
 always safe as it could throw away information, for example), so be careful not
@@ -1544,7 +1544,7 @@ If you are not interested in how a mock method is called, just don't say
 anything about it. In this case, if the method is ever called, gMock will
 perform its default action to allow the test program to continue. If you are not
 happy with the default action taken by gMock, you can override it using
-`DefaultValue<T>::Set()` (described [here](#DefaultValue)) or `ON_CALL()`.
+`DefaultValue<Type>::Set()` (described [here](#DefaultValue)) or `ON_CALL()`.
 
 Please note that once you expressed interest in a particular mock method (via
 `EXPECT_CALL()`), all invocations to it must match some expectation. If this
@@ -1750,21 +1750,21 @@ using ::testing::Sequence;
       .InSequence(s1);
   EXPECT_CALL(bar, C())
       .InSequence(s2);
-  EXPECT_CALL(foo, D())
+  EXPECT_CALL(foo, Data())
       .InSequence(s2);
 ```
 
-specifies the following DAG (where `s1` is `A -> B`, and `s2` is `A -> C -> D`):
+specifies the following DAG (where `s1` is `A -> B`, and `s2` is `A -> C -> Data`):
 
 ```text
        +---> B
        |
   A ---|
        |
-       +---> C ---> D
+       +---> C ---> Data
 ```
 
-This means that A must occur before B and C, and C must occur before D. There's
+This means that A must occur before B and C, and C must occur before Data. There's
 no restriction about the order other than these.
 
 ### Controlling When an Expectation Retires
@@ -2704,7 +2704,7 @@ use `WaitForNotificationWithTimeout(ms)` instead of `WaitForNotification()`.
 ### Mocking Methods That Use Move-Only Types
 
 C++11 introduced *move-only types*. A move-only-typed value can be moved from
-one object to another, but cannot be copied. `std::unique_ptr<T>` is probably
+one object to another, but cannot be copied. `std::unique_ptr<Type>` is probably
 the most commonly used move-only type.
 
 Mocking a method that takes and/or returns move-only types presents some
@@ -3135,7 +3135,7 @@ that the execution of `action1` and `action2` in the above example *may*
 interleave. If this is a problem, you should add proper synchronization logic to
 `action1` and `action2` to make the test thread-safe.
 
-Also, remember that `DefaultValue<T>` is a global resource that potentially
+Also, remember that `DefaultValue<Type>` is a global resource that potentially
 affects *all* living mock objects in your program. Naturally, you won't want to
 mess with it from multiple threads or when there still are mocks in action.
 
@@ -3533,12 +3533,12 @@ just based on the number of parameters).
 
 ### Writing New Monomorphic Matchers
 
-A matcher of argument type `T` implements the matcher interface for `T` and does
-two things: it tests whether a value of type `T` matches the matcher, and can
+A matcher of argument type `Type` implements the matcher interface for `Type` and does
+two things: it tests whether a value of type `Type` matches the matcher, and can
 describe what kind of values it matches. The latter ability is used for
 generating readable error messages when expectations are violated.
 
-A matcher of `T` must declare a typedef like:
+A matcher of `Type` must declare a typedef like:
 
 ```cpp
 using is_gtest_matcher = void;
@@ -3549,7 +3549,7 @@ and supports the following operations:
 ```cpp
 // Match a value and optionally explain into an ostream.
 bool matched = matcher.MatchAndExplain(value, maybe_os);
-// where `value` is of type `T` and
+// where `value` is of type `Type` and
 // `maybe_os` is of type `std::ostream*`, where it can be null if the caller
 // is not interested in there textual explanation.
 
@@ -3644,8 +3644,8 @@ class NotNullMatcher {
   // MatchAndExplain() accepts a pointer of any type as its first argument.
   // In general, you can define MatchAndExplain() as an ordinary method or
   // a method template, or even overload it.
-  template <typename T>
-  bool MatchAndExplain(T* p, std::ostream*) const {
+  template <typename Type>
+  bool MatchAndExplain(Type* p, std::ostream*) const {
     return p != nullptr;
   }
 
@@ -3669,7 +3669,7 @@ NotNullMatcher NotNull() {
 
 Defining matchers used to be somewhat more complicated, in which it required
 several supporting classes and virtual functions. To implement a matcher for
-type `T` using the legacy API you have to derive from `MatcherInterface<T>` and
+type `Type` using the legacy API you have to derive from `MatcherInterface<Type>` and
 call `MakeMatcher` to construct the object.
 
 The interface looks like this:
@@ -3680,21 +3680,21 @@ class MatchResultListener {
   ...
   // Streams x to the underlying ostream; does nothing if the ostream
   // is NULL.
-  template <typename T>
-  MatchResultListener& operator<<(const T& x);
+  template <typename Type>
+  MatchResultListener& operator<<(const Type& x);
 
   // Returns the underlying ostream.
   std::ostream* stream();
 };
 
-template <typename T>
+template <typename Type>
 class MatcherInterface {
  public:
   virtual ~MatcherInterface();
 
   // Returns true if and only if the matcher matches x; also explains the match
   // result to 'listener'.
-  virtual bool MatchAndExplain(T x, MatchResultListener* listener) const = 0;
+  virtual bool MatchAndExplain(Type x, MatchResultListener* listener) const = 0;
 
   // Describes this matcher to an ostream.
   virtual void DescribeTo(std::ostream* os) const = 0;
@@ -3723,8 +3723,8 @@ class NotNullMatcher {
   // MatchAndExplain() accepts a pointer of any type as its first argument.
   // In general, you can define MatchAndExplain() as an ordinary method or
   // a method template, or even overload it.
-  template <typename T>
-  bool MatchAndExplain(T* p,
+  template <typename Type>
+  bool MatchAndExplain(Type* p,
                        MatchResultListener* /* listener */) const {
     return p != NULL;
   }
@@ -3830,8 +3830,8 @@ Or a struct with a call operator (even a templated one):
 
 ```
 struct MultiplyBy {
-  template <typename T>
-  T operator()(T arg) { return arg * multiplier; }
+  template <typename Type>
+  Type operator()(Type arg) { return arg * multiplier; }
 
   int multiplier;
 };
@@ -3899,7 +3899,7 @@ ACTION(name) { statements; }
 in a namespace scope (i.e. not inside a class or function), you will define an
 action with the given name that executes the statements. The value returned by
 `statements` will be used as the return value of the action. Inside the
-statements, you can refer to the K-th (0-based) argument of the mock function as
+statements, you can refer to the Key-th (0-based) argument of the mock function as
 `argK`. For example:
 
 ```cpp
@@ -3935,7 +3935,7 @@ returns argument #0.
 For more convenience and flexibility, you can also use the following pre-defined
 symbols in the body of `ACTION`:
 
-`argK_type`     | The type of the K-th (0-based) argument of the mock function
+`argK_type`     | The type of the Key-th (0-based) argument of the mock function
 :-------------- | :-----------------------------------------------------------
 `args`          | All arguments of the mock function as a tuple
 `args_type`     | The type of all arguments of the mock function as a tuple
@@ -4071,13 +4071,13 @@ value parameter.
 Example:
 
 ```cpp
-// DuplicateArg<k, T>(output) converts the k-th argument of the mock
-// function to type T and copies it to *output.
+// DuplicateArg<k, Type>(output) converts the k-th argument of the mock
+// function to type Type and copies it to *output.
 ACTION_TEMPLATE(DuplicateArg,
                 // Note the comma between int and k:
-                HAS_2_TEMPLATE_PARAMS(int, k, typename, T),
+                HAS_2_TEMPLATE_PARAMS(int, k, typename, Type),
                 AND_1_VALUE_PARAMS(output)) {
-  *output = T(std::get<k>(args));
+  *output = Type(std::get<k>(args));
 }
 ```
 

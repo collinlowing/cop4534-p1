@@ -7,11 +7,10 @@
 #include "../StringHashTable.hpp"
 
 
-// tests mock hash() function
-/*
+// tests add node and search
 TEST(HashTableTests, TestSearchNode) {
     std::size_t numBuckets = 11;
-    StringHashTable hashTable = StringHashTable(numBuckets);
+    StringHashTable hashTable(numBuckets);
     std::string data = "name";
     std::string key = "password";
 
@@ -22,4 +21,6 @@ TEST(HashTableTests, TestSearchNode) {
     std::string expectedKey = searchedNode->getKey();
 
     EXPECT_EQ(expectedKey, key);
-}*/
+}
+
+// test remove with chained nodes

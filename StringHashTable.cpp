@@ -13,38 +13,39 @@ StringHashTable::StringHashTable(std::size_t numBuckets) {
 
     this->numBuckets = numBuckets;
 
-    table.resize(this->numBuckets);
+    table = new StringNode[this->numBuckets];
 }
 
 std::size_t StringHashTable::hash(std::string key) {
-    return std::hash<std::string>{}(key) % numBuckets;
+    return StringHasher::hash(key) % numBuckets;
 }
 
 void StringHashTable::add(std::string &data, std::string &key) {
-    std::size_t index = hash(key);
+    std::size_t index = StringHashTable::hash(key);
     StringNode* newNode = new StringNode(data, key);
 
-    table.push_back(newNode);
+    table[index] = *newNode;
 }
 
 bool StringHashTable::remove(std::string key) {
-    std::size_t index = hash(key);
+    std::size_t index = StringHashTable::hash(key);
 
-    if(table.empty())
+    if(table == nullptr)
     {
         return false;
     }
-    for(int i = 0; i < table.size(); i++)
-    {
-        if(table.at(i)->getKey() == key)
-        {
-            delete table.at(i);
-            return true;
-        }
-    }
+    StringNode* node = StringHashTable::search(key);
+    delete(node);
+    return true;
 }
 
 StringNode *StringHashTable::search(std::string key) {
+    for(int i = 0; i < numBuckets; i++) {
+        if(key == table[i].getKey())
+        {
+            return &table[i];
+        }
+    }
     return nullptr;
 }
 

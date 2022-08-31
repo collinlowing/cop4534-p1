@@ -21,7 +21,7 @@
 class StringHashTable {
 private:
     std::size_t numBuckets;
-    std::vector<StringNode *> table;
+    StringNode* table;
 public:
     StringHashTable(std::size_t numBuckets);
     std::size_t hash(std::string key);

@@ -8,15 +8,20 @@
 
 #include <vector>
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <limits>
 
 class Parser {
 
 public:
-    std::vector<std::string> readNames(std::string fileName);
+    static std::vector<std::string> readNames(std::string fileName);
 
-    bool outputData(std::vector<std::string> data, std::string fileName);
+    static bool outputData(std::vector<std::string> data, std::string fileName);
 
-    std::vector<std::string> readData(std::string fileName);
+    static bool even(std::size_t number);
+
+    static std::vector<std::string> readData(std::string fileName);
 };
 
 

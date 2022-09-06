@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Cipher.hpp"
+#include "Parser.hpp"
 
 int main() {
-    Cipher cipher;
-    std::string key = cipher.getKey();
-    std::string message = "thisisamessage";
-    std::string resizedKey = cipher.resize(key, message);
-    std::cout << "Hello World! " << resizedKey << std::endl;
+    std::vector<std::string> data;
+    data.emplace_back("collin\tpassword");
+    data.emplace_back("john\ttest");
+    Parser::outputData(data, "rawdata.txt");
+
     return 0;
 }

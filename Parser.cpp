@@ -29,23 +29,20 @@ bool Parser::outputData(std::vector<std::string> data, std::string fileName) {
 
     std::ofstream outputFileStream(fileName);
 
-    if(!outputFileStream)
-    {
+    if (!outputFileStream) {
         std::cout << fileName << " could not be opened." << std::endl;
 
         return false;
     }
 
-    if(data.size() <= 0 || !even(data.size()))
-    {
+    if (data.size() <= 0 || !even(data.size())) {
         std::cout << "data is not valid for writing to file" << std::endl;
         return false;
     }
 
     std::size_t counter = 0;
-    for(auto item : data)
-    {
-        if(even(counter))
+    for (auto item: data) {
+        if (even(counter))
             outputFileStream << item << "\t" << std::endl;
         else
             outputFileStream << item << std::endl;

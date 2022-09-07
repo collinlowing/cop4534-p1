@@ -16,8 +16,7 @@ TEST(ParserTests, getNames) {
 }
 
 // output raw data for username and passwords.
-TEST(ParserTests, outputUsernamePassword)
-{
+TEST(ParserTests, outputUsernamePassword) {
     std::vector<std::string> data;
     data.emplace_back("collin\tpassword");
     data.emplace_back("john\ttest");
@@ -26,8 +25,7 @@ TEST(ParserTests, outputUsernamePassword)
 }
 
 // invalid data set being denied
-TEST(ParserTests, invalidData)
-{
+TEST(ParserTests, invalidData) {
     std::vector<std::string> data;
     data.emplace_back("collin\tpassword");
     data.emplace_back("john\ttest");

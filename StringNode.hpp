@@ -12,14 +12,18 @@ class StringNode {
 private:
     std::string data;
     std::string key;
-    StringNode* next = nullptr;
+    StringNode *next = nullptr;
 public:
     StringNode();
+
     StringNode(std::string data, std::string key);  // parameters for initial values
     std::string getData();
+
     std::string getKey();
-    StringNode* getNext();
-    void setNext(StringNode* next);
+
+    StringNode *getNext();
+
+    void setNext(StringNode *next);
 };
 
 

@@ -6,8 +6,8 @@
 
 // make hash key
 TEST(StringHasherTests, hash) {
-    std::size_t expectedResult = 'p'+'a'+'s'+'s'+'w'+'o'+'r'+'d';
+    std::size_t expectedResult = 'p' + 'a' + 's' + 's' + 'w' + 'o' + 'r' + 'd';
     std::string key = "password";
     std::size_t hash = StringHasher::hash(key);
-EXPECT_EQ(hash, expectedResult);
+    EXPECT_EQ(hash, expectedResult);
 }

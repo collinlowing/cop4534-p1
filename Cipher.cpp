@@ -28,8 +28,7 @@ std::string Cipher::encrypt(std::string message) {
     std::string encryptedMsg = "";
 
     // iterate through message
-    for (int i = 0, j = 0; i < message.size(); i++)
-    {
+    for (int i = 0, j = 0; i < message.size(); i++) {
         // get character from message
         char c = message[i];
 
@@ -68,8 +67,7 @@ std::string Cipher::decrypt(const std::string key, std::string message) {
     std::string decryptedMsg = "";
 
     // iterate through message
-    for (int i = 0, j = 0; i < message.size(); i++)
-    {
+    for (int i = 0, j = 0; i < message.size(); i++) {
         // get character from message
         char c = message[i];
 

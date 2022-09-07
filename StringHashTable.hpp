@@ -21,13 +21,18 @@
 class StringHashTable {
 private:
     std::size_t numBuckets;
-    StringNode* table;
+    StringNode *table;
 public:
     StringHashTable(std::size_t numBuckets);
+
     std::size_t hash(std::string key);
+
     void add(std::string &data, std::string &key);
+
     bool remove(std::string key);
-    StringNode* search(std::string key);
+
+    StringNode *search(std::string key);
+
     ~StringHashTable();
 };
 

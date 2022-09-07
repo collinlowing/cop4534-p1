@@ -23,7 +23,7 @@ TEST(StringNodeTests, getKey) {
 
 // get next pointer
 TEST(StringNodeTests, nextPointer) {
-    auto* nextPtr = new StringNode();
+    auto *nextPtr = new StringNode();
     StringNode node;
     node.setNext(nextPtr);
     EXPECT_EQ(node.getNext(), nextPtr);

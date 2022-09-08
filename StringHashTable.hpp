@@ -27,7 +27,7 @@ public:
 
     std::size_t hash(std::string key);
 
-    void add(std::string &data, std::string &key);
+    void add(std::string data, std::string key);
 
     bool remove(std::string key);
 

@@ -19,7 +19,7 @@ std::size_t StringHashTable::hash(std::string key) {
     return StringHasher::hash(key) % numBuckets;
 }
 
-void StringHashTable::add(std::string &data, std::string &key) {
+void StringHashTable::add(std::string data, std::string key) {
     std::size_t index = StringHashTable::hash(key);
     StringNode *newNode = new StringNode(data, key);
 
@@ -29,6 +29,10 @@ void StringHashTable::add(std::string &data, std::string &key) {
 bool StringHashTable::remove(std::string key) {
     std::size_t index = StringHashTable::hash(key);
 
+    /*
+     * while (current != nullptr && current.getData())
+     */
+
     // check if table is empty
     if (table == nullptr) {
         return false;
@@ -36,14 +40,21 @@ bool StringHashTable::remove(std::string key) {
 
     // get node to delete
     StringNode *node = search(key);
+    if(node->getNext() != nullptr) {
+        StringNode* temp = node;
+        node = node->getNext();
+    }
     StringNode *temp = node;
 
     node = nullptr;
+    //delete temp;
 
     return true;
 }
 
 StringNode *StringHashTable::search(std::string key) {
+    // hash
+    // while(cur
     for (int i = 0; i < numBuckets; i++) {
         if (key == table[i].getKey()) {
             return &table[i];

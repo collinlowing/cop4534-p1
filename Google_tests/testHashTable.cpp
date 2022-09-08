@@ -31,16 +31,20 @@ TEST(HashTableTests, removeNode) {
     StringHashTable hashTable(numBuckets);
     std::string data = "name";
     std::string key = "password";
+    StringNode *searchedNode1 = nullptr;
+    StringNode *searchedNode2 = nullptr;
 
     hashTable.add(data, key);
 
-    StringNode *searchedNode;
-    searchedNode = hashTable.search(key);
 
-    EXPECT_NE(searchedNode, nullptr);
+    searchedNode1 = hashTable.search(key);
+
+    EXPECT_FALSE(searchedNode1 == nullptr);
 
     hashTable.remove(key);
-    searchedNode = hashTable.search(key);
+    searchedNode2 = hashTable.search(key);
 
-    EXPECT_EQ(searchedNode, nullptr);
+    std::cout << searchedNode2 << std::endl;
+
+    EXPECT_TRUE(searchedNode2 == nullptr);
 }

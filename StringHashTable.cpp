@@ -26,12 +26,15 @@ void StringHashTable::add(std::string data, std::string key) {
     table[index] = *newNode;
 }
 
+/*
 bool StringHashTable::remove(std::string key) {
     std::size_t index = StringHashTable::hash(key);
 
-    /*
+    */
+/*
      * while (current != nullptr && current.getData())
-     */
+     *//*
+
 
     // check if table is empty
     if (table == nullptr) {
@@ -51,6 +54,7 @@ bool StringHashTable::remove(std::string key) {
 
     return true;
 }
+*/
 
 StringNode *StringHashTable::search(std::string key) {
     // hash

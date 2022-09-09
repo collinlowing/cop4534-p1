@@ -2,25 +2,25 @@
 // Created by cel on 6/13/22.
 //
 
-#include "Cipher.hpp"
+#include "VigenereCipher.hpp"
 
-Cipher::Cipher() {
+VigenereCipher::VigenereCipher() {
     this->key = "jones";
 }
 
-Cipher::Cipher(std::string key) {
+VigenereCipher::VigenereCipher(std::string key) {
     this->key = key;
 }
 
-std::string Cipher::getKey() {
+std::string VigenereCipher::getKey() {
     return this->key;
 }
 
-void Cipher::setKey(std::string key) {
+void VigenereCipher::setKey(std::string key) {
     this->key = key;
 }
 
-std::string Cipher::encrypt(std::string message) {
+std::string VigenereCipher::encrypt(std::string message) {
     // resize encryption key to be same length as message
     std::string resizedKey = resize(key, message);
 
@@ -40,7 +40,7 @@ std::string Cipher::encrypt(std::string message) {
     return encryptedMsg;
 }
 
-std::string Cipher::resize(std::string key, std::string message) {
+std::string VigenereCipher::resize(std::string key, std::string message) {
     int msgLength = message.length();
     std::cout << msgLength << std::endl;
     int keyLength = key.length();
@@ -59,7 +59,7 @@ std::string Cipher::resize(std::string key, std::string message) {
     return resizedKey;
 }
 
-std::string Cipher::decrypt(const std::string key, std::string message) {
+std::string VigenereCipher::decrypt(const std::string key, std::string message) {
     // resize encryption key to be same length as message
     std::string resizedKey = resize(key, message);
 

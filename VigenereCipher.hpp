@@ -2,20 +2,20 @@
 // Created by cel on 6/13/22.
 //
 
-#ifndef COP4534_P1_CIPHER_HPP
-#define COP4534_P1_CIPHER_HPP
+#ifndef COP4534_P1_VIGENERECIPHER_HPP
+#define COP4534_P1_VIGENERECIPHER_HPP
 
 
 #include <iostream>
 #include <string>
 
-class Cipher {
+class VigenereCipher {
 private:
     std::string key;
 public:
-    Cipher();
+    VigenereCipher();
 
-    Cipher(std::string key);
+    VigenereCipher(std::string key);
 
     std::string getKey();
 
@@ -29,4 +29,4 @@ public:
 };
 
 
-#endif //COP4534_P1_CIPHER_HPP
+#endif //COP4534_P1_VIGENERECIPHER_HPP

@@ -2,34 +2,68 @@
 
 #include "Parser.hpp"
 #include "StringHashTable.hpp"
+#include "PasswordGenerator.hpp"
+#include "VigenereCipher.hpp"
+
+void runTests();
 
 int main() {
-//    std::vector<std::string> vect;
-//    vect.emplace_back("collin\tpassword");
-//    vect.emplace_back("john\ttest");
-//    Parser::outputData(vect, "rawdata.txt");
+    const std::size_t HASH_SIZE = 44000;
+    StringHashTable hashTable(HASH_SIZE);
+    std::string namesFileName = "names.txt";
+    std::string rawFileName = "rawdata.txt";
+    std::string encryptedFileName = "encrypteddata.txt";
+    std::size_t passwordLength = 9;
+    std::vector<std::string> names = Parser::readNames(namesFileName);
+    std::vector<std::string> output;
+    int multiplier = 1;
+    for (auto name : names) {
+        int randomSeed = time(0) * multiplier;
 
-    std::size_t numBuckets = 11;
-    StringHashTable hashTable(numBuckets);
-    std::string data = "name";
-    std::string key = "password";
-    StringNode *searchedNode1 = nullptr;
-    StringNode *searchedNode2 = nullptr;
+        std::string password = PasswordGenerator::generatePassword(passwordLength, randomSeed);
+        multiplier++;
+        output.push_back(name);
+        output.push_back(password);
+    }
 
-    hashTable.add(data, key);
+    // write to rawdata.txt
+    Parser::outputData(output, rawFileName);
+    output.clear();
 
+    // get data from rawdata.txt
+    std::vector<std::string> data = Parser::readData(rawFileName);
 
-    searchedNode1 = hashTable.search(key);
+    // create encrypted passwords
+    for(int i = 0; i < data.size(); i++)
+    {
+        std::string name;
+        std::string password;
 
-    if(searchedNode1 != nullptr)
-        std::cout << searchedNode1->getData() << std::endl;
+        // name is first
+        if(Parser::even(i))
+        {
+            name = data.at(i);
+            output.push_back(name);
+        }
+        // password is second
+        else
+        {
+            VigenereCipher cipher;
+            password = cipher.encrypt(data.at(i));
+            output.push_back(password);
+        }
+        // load into hashtable
+        hashTable.add(password, name);
+    }
 
-    //TODO: Not actually removing the node
-    hashTable.remove(key);
-    searchedNode2 = hashTable.search(key);
+    // write to encrypteddata.txt
+    Parser::outputData(output, encryptedFileName);
 
-    if(searchedNode2 != nullptr)
-        std::cout << searchedNode2->getData() << std::endl;
+    runTests();
 
     return 0;
+}
+
+void runTests() {
+
 }

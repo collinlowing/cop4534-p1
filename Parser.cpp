@@ -43,9 +43,11 @@ bool Parser::outputData(std::vector<std::string> data, std::string fileName) {
     std::size_t counter = 0;
     for (auto item: data) {
         if (even(counter))
-            outputFileStream << item << "\t" << std::endl;
+            outputFileStream << item << "\t";
         else
             outputFileStream << item << std::endl;
+
+        counter++;
     }
 
     outputFileStream.close();

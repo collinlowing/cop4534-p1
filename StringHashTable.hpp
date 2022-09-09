@@ -29,7 +29,7 @@ public:
 
     void add(std::string data, std::string key);
 
-    bool remove(std::string key);
+    //bool remove(std::string key);
 
     StringNode *search(std::string key);
 

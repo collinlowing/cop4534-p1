@@ -3,14 +3,14 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Cipher.hpp"
+#include "../VigenereCipher.hpp"
 
 // Test getting key parameterized constructor
 TEST(CipherTests, paramKey) {
     // assign key string
     std::string key = "test";
     // pass key into constructor
-    Cipher c1(key);
+    VigenereCipher c1(key);
     // get key
     std::string testStr = c1.getKey();
     // key and test string must be equal
@@ -22,7 +22,7 @@ TEST(CipherTests, defaultKey) {
     // assign key string
     std::string key = "jones";
     // pass key into constructor
-    Cipher c2;
+    VigenereCipher c2;
     // get key
     std::string testStr = c2.getKey();
     // key and test string must be equal
@@ -34,7 +34,7 @@ TEST(CipherTests, setKey) {
     // assign key string
     std::string key = "test";
     // pass key into constructor
-    Cipher c3;
+    VigenereCipher c3;
     // set key
     c3.setKey(key);
     // get key
@@ -48,7 +48,7 @@ TEST(CipherTests, resizeKey) {
     // assign key string
     std::string key = "encrypt";
     // pass key into constructor
-    Cipher c4(key);
+    VigenereCipher c4(key);
     // assign message string to encrypt
     std::string message = "thisisamessage";
     // resize key to fit message
@@ -64,7 +64,7 @@ TEST(CipherTests, ecryptMessage) {
     // assign key string
     std::string key = "encrypt";
     // pass key into constructor
-    Cipher c5(key);
+    VigenereCipher c5(key);
     // assign message string to encrypt
     std::string message = "thisisamessage";
     // encrypt message
@@ -80,7 +80,7 @@ TEST(CipherTests, decryptMessage) {
     // assign key string
     std::string key = "encrypt";
     // pass key into constructor
-    Cipher c6(key);
+    VigenereCipher c6(key);
     // assign encrypted message
     std::string encryptedMsg = "xukjghtqrujyvx";
     // decrypt message

@@ -25,6 +25,7 @@ TEST(HashTableTests, searchNode) {
     EXPECT_EQ(expectedKey, key);
 }
 
+/*
 // test remove with chained nodes
 TEST(HashTableTests, removeNode) {
     std::size_t numBuckets = 11;
@@ -48,3 +49,4 @@ TEST(HashTableTests, removeNode) {
 
     EXPECT_TRUE(searchedNode2 == nullptr);
 }
+*/

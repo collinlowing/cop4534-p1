@@ -21,7 +21,9 @@
 class StringHashTable {
 private:
     std::size_t numBuckets;
-    StringNode *table;
+    StringNode *table = nullptr;
+    StringNode *current = nullptr;
+    StringNode *previous = nullptr;
 public:
     StringHashTable(std::size_t numBuckets);
 

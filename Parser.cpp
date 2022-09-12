@@ -73,7 +73,7 @@ std::vector<std::string> Parser::readData(std::string fileName) {
         dataVector.push_back(data);
     }
 
-    std::cout << dataVector.size() << std::endl;
+    //std::cout << dataVector.size() << std::endl;
 
     inputFileStream.close();
     return dataVector;

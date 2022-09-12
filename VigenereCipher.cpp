@@ -42,9 +42,9 @@ std::string VigenereCipher::encrypt(std::string message) {
 
 std::string VigenereCipher::resize(std::string key, std::string message) {
     int msgLength = message.length();
-    std::cout << msgLength << std::endl;
+    //std::cout << msgLength << std::endl;
     int keyLength = key.length();
-    std::cout << keyLength << std::endl;
+    //std::cout << keyLength << std::endl;
 
     std::string resizedKey = "";
 
@@ -55,7 +55,7 @@ std::string VigenereCipher::resize(std::string key, std::string message) {
             break;
         resizedKey.append(1, key[i]);
     }
-    std::cout << resizedKey << std::endl;
+    //std::cout << resizedKey << std::endl;
     return resizedKey;
 }
 

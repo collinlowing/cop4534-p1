@@ -8,5 +8,5 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/names.test
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/names.txt
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_executable(cop4534_p1 main.cpp VigenereCipher.cpp VigenereCipher.hpp StringHashTable.hpp StringHashTable.cpp Parser.cpp Parser.hpp StringNode.cpp StringNode.hpp StringHasher.hpp PasswordGenerator.cpp PasswordGenerator.hpp)
+add_executable(cop4534_p1 main.cpp VigenereCipher.cpp VigenereCipher.hpp StringHashTable.hpp StringHashTable.cpp Parser.cpp Parser.hpp StringNode.cpp StringNode.hpp StringHasher.hpp PasswordGenerator.cpp PasswordGenerator.hpp NameRunner.cpp NameRunner.hpp)
 add_subdirectory(Google_tests)

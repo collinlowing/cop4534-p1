@@ -10,10 +10,10 @@
 class StringHasher {
 public:
     static std::size_t hash(std::string key) {
-        std::size_t total = 0;
+        std::size_t total = 1;
         for (int i = 0; i < key.length(); i++) {
             char c = key[i];
-            total += c;
+            total *= c;
         }
 
         return total;

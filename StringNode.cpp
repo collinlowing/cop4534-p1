@@ -6,8 +6,8 @@
 
 
 StringNode::StringNode() {
-    data = "";
-    key = "";
+    this->data = "";
+    this->key = "";
 }
 
 StringNode::StringNode(std::string data, std::string key) {
@@ -30,3 +30,4 @@ StringNode *StringNode::getNext() {
 void StringNode::setNext(StringNode *next) {
     this->next = next;
 }
+

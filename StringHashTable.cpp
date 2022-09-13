@@ -5,37 +5,47 @@
 #include "StringHashTable.hpp"
 
 
-StringHashTable::StringHashTable(std::size_t numBuckets) {
-    if (numBuckets <= 0) {
+StringHashTable::StringHashTable(std::size_t size) {
+    if (size <= 0) {
         throw std::invalid_argument("number of buckets in hash table must be greater than 0");
     }
 
-    this->numBuckets = numBuckets;
+    TABLE_SIZE = size;
 
-    table = new StringNode[this->numBuckets]();
+    table = new StringNode*[TABLE_SIZE]();
+
+    for(int i = 0; i < TABLE_SIZE; i++)
+    {
+        table[i] = nullptr;
+    }
 }
 
 std::size_t StringHashTable::hash(std::string key) {
-    return StringHasher::hash(key) % numBuckets;
+    return StringHasher::hash(key) % TABLE_SIZE;
 }
 
 void StringHashTable::add(std::string data, std::string key) {
     std::size_t index = StringHashTable::hash(key);
-    StringNode *newNode = new StringNode(data, key);
-    if (&table[index] == nullptr || table[index].getKey() == "") {
-        table[index] = *newNode;
-    }
-    else {
-        current = &table[index];
+    StringNode* entry = table[index];
+    StringNode* previousNode = nullptr;
+    StringNode* newNode = new StringNode(data, key);
 
-        while(current != nullptr && current->getKey() != "") {
-            previous = current;
-            current = current->getNext();
+    // if node at index is empty
+    if(entry == nullptr)
+    {
+        table[index] = newNode;
+    }
+
+    // node already exists at index
+    else {
+        while(entry != nullptr)
+        {
+            newNode->setPrevious(entry);
+            entry = entry->getNext();
         }
 
-        current = newNode;
+        entry = newNode;
     }
-
 }
 
 /*
@@ -67,43 +77,26 @@ bool StringHashTable::remove(std::string key) {
 StringNode *StringHashTable::search(std::string key) {
     // get hash index
     std::size_t index = hash(key);
+    bool found = false;
+    StringNode * entry = table[index];
 
-    current = &table[index];
-
-    std::cout << current->getKey() << std::endl;
-    std::cout << current->getData() << std::endl;
-
-    while(current->getNext() != nullptr && current->getKey() != key) {
-        current = current->getNext();
-        if(current->getKey() == key)
-        {
-            return  current;
+    if(entry != nullptr){
+        while (entry != nullptr) {
+            if(entry->getKey() == key) {
+                found = true;
+            }
+            if(found) {
+                return entry;
+            }
+            entry = entry->getNext();
         }
     }
-    return nullptr;
+    if (!found)
+    {
+        return nullptr;
+    }
 }
 
 StringHashTable::~StringHashTable() {
-//    for (int i = 0; i < numBuckets; i++)
-//    {
-//        current = &table[i];
-//
-//        if(current == nullptr)
-//        {
-//            // bucket is empty
-//            continue;
-//        }
-//
-//        while (current->getNext() != nullptr)
-//        {
-//            StringNode * temp = current;
-//
-//            current = current->getNext();
-//
-//            delete temp;
-//        }
-//
-//        delete current;
-//    }
-//    delete [] table;
+    delete[] table;
 }

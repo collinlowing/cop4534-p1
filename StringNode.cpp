@@ -31,3 +31,11 @@ void StringNode::setNext(StringNode *next) {
     this->next = next;
 }
 
+void StringNode::setPrevious(StringNode *previous) {
+    this->previous = previous;
+}
+
+StringNode *StringNode::getPrevious() {
+    return previous;
+}
+

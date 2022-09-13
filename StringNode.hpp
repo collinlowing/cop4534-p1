@@ -13,6 +13,7 @@ private:
     std::string data;
     std::string key;
     StringNode *next = nullptr;
+    StringNode *previous = nullptr;
 public:
     StringNode();
 
@@ -23,7 +24,11 @@ public:
 
     StringNode *getNext();
 
+    StringNode *getPrevious();
+
     void setNext(StringNode *next);
+
+    void setPrevious(StringNode *pNode);
 };
 
 

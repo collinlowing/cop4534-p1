@@ -20,12 +20,10 @@
 
 class StringHashTable {
 private:
-    std::size_t numBuckets;
-    StringNode *table = nullptr;
-    StringNode *current = nullptr;
-    StringNode *previous = nullptr;
+    std::size_t TABLE_SIZE;
+    StringNode **table;
 public:
-    StringHashTable(std::size_t numBuckets);
+    StringHashTable(std::size_t size);
 
     std::size_t hash(std::string key);
 

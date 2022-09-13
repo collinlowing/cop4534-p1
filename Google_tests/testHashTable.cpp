@@ -39,7 +39,7 @@ TEST(HashTableTests, multipleNodes) {
     hashTable.add(data2, key2);
 
     searchedNode = hashTable.search("wrong");
-    EXPECT_EQ(searchedNode, nullptr);
+    EXPECT_TRUE(searchedNode == nullptr);
 
     searchedNode = hashTable.search(key2);
     ASSERT_FALSE(searchedNode == nullptr);

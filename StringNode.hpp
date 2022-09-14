@@ -1,6 +1,10 @@
-//
-// Created by cel on 7/12/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: StringNode.hpp
+  Project 1
+
+  Stores string data and key for externally chained hashtable
+***************************************************************/
 
 #ifndef COP4534_P1_STRINGNODE_HPP
 #define COP4534_P1_STRINGNODE_HPP

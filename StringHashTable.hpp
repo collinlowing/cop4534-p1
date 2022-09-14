@@ -1,16 +1,13 @@
-//
-// Created by cel on 6/13/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: StringHashTable.hpp
+  Project 1
+
+  Externally chained hashtable that stores two strings in a StringNode
+***************************************************************/
 
 #ifndef P1_HASHTABLE_H
 #define P1_HASHTABLE_H
-
-/*
- * Template hash table that stores any class with a defined hashing function
- *
- * Requires an item class that holds a data class and key class.
- *
- */
 
 #include <vector>
 #include <stdexcept>
@@ -20,20 +17,18 @@
 
 class StringHashTable {
 private:
-    const std::size_t TABLE_SIZE;
+    std::size_t TABLE_SIZE;
     StringNode **table;
 public:
-    StringHashTable(std::size_t size);
+    StringHashTable(std::size_t size);  // initializes hashtable max size
 
-    std::size_t hash(std::string key);
+    std::size_t hash(std::string key);  // gets hash value
 
-    void add(std::string data, std::string key);
+    void add(std::string data, std::string key);    // adds a set of two strings to table
 
-    //bool remove(std::string key);
+    StringNode *search(std::string key);    // gets a node from table using the key value
 
-    StringNode *search(std::string key);
-
-    ~StringHashTable();
+    ~StringHashTable(); // cleans up memory
 };
 
 #endif //P1_HASHTABLE_H

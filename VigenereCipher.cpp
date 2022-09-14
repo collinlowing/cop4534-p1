@@ -1,17 +1,26 @@
-//
-// Created by cel on 6/13/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: VigenereCipher.cpp
+  Project 1
+
+  Encrypts a string using a key with the Vigenere Cipher.
+***************************************************************/
 
 #include "VigenereCipher.hpp"
 
+// default key
 VigenereCipher::VigenereCipher() {
     this->key = "jones";
 }
 
+// custom key
 VigenereCipher::VigenereCipher(std::string key) {
     this->key = key;
 }
 
+/*
+ * Setter and Getter
+ */
 std::string VigenereCipher::getKey() {
     return this->key;
 }
@@ -20,6 +29,7 @@ void VigenereCipher::setKey(std::string key) {
     this->key = key;
 }
 
+// use Vigenere Cipher to encrypt message
 std::string VigenereCipher::encrypt(std::string message) {
     // resize encryption key to be same length as message
     std::string resizedKey = resize(key, message);
@@ -40,22 +50,25 @@ std::string VigenereCipher::encrypt(std::string message) {
     return encryptedMsg;
 }
 
+// resize key to match message length
 std::string VigenereCipher::resize(std::string key, std::string message) {
     std::size_t msgLength = message.length();
-    //std::cout << msgLength << std::endl;
     int keyLength = key.length();
-    //std::cout << keyLength << std::endl;
-
     std::string resizedKey = "";
 
-    for (int i = 0;; i++) {
+    int i = 0;
+    while(true) {
+        // restart key pattern
         if (keyLength == i)
             i = 0;
+        // when key is the same length as message
         if (resizedKey.length() == msgLength)
             break;
+        // add character from key to new length key
         resizedKey.append(1, key[i]);
+
+        i++;
     }
-    //std::cout << resizedKey << std::endl;
     return resizedKey;
 }
 

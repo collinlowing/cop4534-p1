@@ -1,99 +1,81 @@
-//
-// Created by cel on 8/12/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: StringHashTable.cpp
+  Project 1
+
+  Externally chained hashtable that stores two strings in a StringNode
+***************************************************************/
 
 #include "StringHashTable.hpp"
 
-
-StringHashTable::StringHashTable(std::size_t size) {
+// initializes hashtable max size
+StringHashTable::StringHashTable(const std::size_t size) {
     if (size <= 0) {
         throw std::invalid_argument("number of buckets in hash table must be greater than 0");
     }
 
     TABLE_SIZE = size;
 
-    table = new StringNode*[TABLE_SIZE]();
+    table = new StringNode *[TABLE_SIZE]();
 
-    for(std::size_t i = 0; i < TABLE_SIZE; i++)
-    {
+    // initializes all pointers to nullptr
+    for (std::size_t i = 0; i < TABLE_SIZE; i++) {
         table[i] = nullptr;
     }
 }
 
+// gets hash value adjusted for TABLE_SIZE
 std::size_t StringHashTable::hash(std::string key) {
     return StringHasher::hash(key) % TABLE_SIZE;
 }
 
+// adds a set of two strings to table
 void StringHashTable::add(std::string data, std::string key) {
-    std::size_t index = StringHashTable::hash(key);
-    StringNode* entry = table[index];
-    StringNode* newNode = new StringNode(data, key);
+    std::size_t index = StringHashTable::hash(key); // get hash index
+    StringNode *current = table[index];   // creates a referential pointer at hash index
+    StringNode *newNode = new StringNode(data, key);    // initializes new node to add
 
     // if node at index is empty
-    if(entry == nullptr)
-    {
+    if (current == nullptr) {
         table[index] = newNode;
     }
 
     // node already exists at index
     else {
-        while(entry != nullptr)
-        {
-            newNode->setPrevious(entry);
-            entry = entry->getNext();
+        while (current != nullptr) {
+            newNode->setPrevious(current);
+            current = current->getNext();
         }
 
-        entry = newNode;
+        current = newNode;
     }
 }
 
-/*
-bool StringHashTable::remove(std::string key) {
-    // get hash index
-    std::size_t index = hash(key);
-
-    current = &table[index];
-
-    if(current == nullptr)
-    {
-        // not found
-        return false;
-    }
-    else if(previous == nullptr)
-    {
-        table[index] = *current->getNext();
-    }
-    else
-    {
-        previous->getNext() = current->getNext();
-    }
-
-    return true;
-}
-*/
-
-//TODO: fix search
+// gets a node from table using the key value
 StringNode *StringHashTable::search(std::string key) {
-    // get hash index
-    std::size_t index = hash(key);
-    bool found = false;
-    StringNode * entry = table[index];
+    std::size_t index = hash(key);  // get hash index
+    bool found = false; // flag for found key
+    StringNode *current = table[index]; // creates a referential pointer at hash index
 
-    if(entry != nullptr){
-        while (entry != nullptr) {
-            if(entry->getKey() == key) {
+    // if index is not empty
+    if (current != nullptr) {
+        // iterate through chain until reached the end
+        while (current != nullptr) {
+            // found key
+            if (current->getKey() == key) {
                 found = true;
             }
-            if(found) {
-                return entry;
+            if (found) {
+                return current;
             }
-            entry = entry->getNext();
+            // go to next node in chain
+            current = current->getNext();
         }
     }
-    // if not found
-    return nullptr;
+    return nullptr; // not found
 }
 
+// deletes table
 StringHashTable::~StringHashTable() {
     delete[] table;
 }

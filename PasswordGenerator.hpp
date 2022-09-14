@@ -1,6 +1,10 @@
-//
-// Created by cel on 9/6/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: PasswordGenerator.hpp
+  Project 1
+
+  Generates a random password with a provided seed value.
+***************************************************************/
 
 #ifndef COP4534_P1_PASSWORDGENERATOR_HPP
 #define COP4534_P1_PASSWORDGENERATOR_HPP

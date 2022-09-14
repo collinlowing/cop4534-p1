@@ -1,6 +1,10 @@
-//
-// Created by cel on 6/13/22.
-//
+/***************************************************************
+  Student Name: Collin Lowing
+  File Name: VigenereCipher.hpp
+  Project 1
+
+  Encrypts a string using a key with the Vigenere Cipher.
+***************************************************************/
 
 #ifndef COP4534_P1_VIGENERECIPHER_HPP
 #define COP4534_P1_VIGENERECIPHER_HPP

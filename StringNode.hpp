@@ -29,6 +29,8 @@ public:
     void setNext(StringNode *next);
 
     void setPrevious(StringNode *pNode);
+
+    ~StringNode();
 };
 
 

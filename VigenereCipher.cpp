@@ -28,7 +28,7 @@ std::string VigenereCipher::encrypt(std::string message) {
     std::string encryptedMsg = "";
 
     // iterate through message
-    for (int i = 0, j = 0; i < message.size(); i++) {
+    for (std::size_t i = 0, j = 0; i < message.size(); i++) {
         // get character from message
         char c = message[i];
 
@@ -41,7 +41,7 @@ std::string VigenereCipher::encrypt(std::string message) {
 }
 
 std::string VigenereCipher::resize(std::string key, std::string message) {
-    int msgLength = message.length();
+    std::size_t msgLength = message.length();
     //std::cout << msgLength << std::endl;
     int keyLength = key.length();
     //std::cout << keyLength << std::endl;
@@ -67,7 +67,7 @@ std::string VigenereCipher::decrypt(const std::string key, std::string message) 
     std::string decryptedMsg = "";
 
     // iterate through message
-    for (int i = 0, j = 0; i < message.size(); i++) {
+    for (std::size_t i = 0, j = 0; i < message.size(); i++) {
         // get character from message
         char c = message[i];
 

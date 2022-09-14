@@ -117,5 +117,5 @@ void NameRunner::runTests() {
 }
 
 NameRunner::~NameRunner() {
-    //delete hashTable;
+    delete hashTable;
 }

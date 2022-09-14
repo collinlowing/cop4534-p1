@@ -39,3 +39,8 @@ StringNode *StringNode::getPrevious() {
     return previous;
 }
 
+StringNode::~StringNode() {
+    delete next;
+    delete previous;
+}
+

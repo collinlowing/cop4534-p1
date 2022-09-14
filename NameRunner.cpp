@@ -27,7 +27,7 @@ void NameRunner::start() {
     std::vector<std::string> data = Parser::readData(rawFileName);
 
     // create encrypted passwords
-    for(int i = 0; i < data.size(); i+=2)
+    for(std::size_t i = 0; i < data.size(); i+=2)
     {
         std::string name;
         std::string password;
@@ -67,7 +67,7 @@ void NameRunner::runTests() {
     }
 
     // check if they match with hashtable
-    for (int i = 0; i < numItems; i++)
+    for (std::size_t i = 0; i < numItems; i++)
     {
         StringNode * node = hashTable->search(userIDs[i]);
         if(node->getData() == passwords[i])
@@ -80,7 +80,7 @@ void NameRunner::runTests() {
     std::cout << "UserID\tPassword\tResult" << std::endl;
 
     // print out all the data
-    for (int i = 0; i < 5; i++)
+    for (std::size_t i = 0; i < 5; i++)
     {
         if(matches[i])
             std::cout << userIDs[i] << "\t" << passwords[i] << "\t" << "match" << std::endl;
@@ -95,7 +95,7 @@ void NameRunner::runTests() {
     }
 
     // check if they match with hashtable
-    for (int i = 0; i < numItems; i++)
+    for (std::size_t i = 0; i < numItems; i++)
     {
         StringNode * node = hashTable->search(userIDs[i]);
         if(node->getData() == passwords[i])

@@ -14,7 +14,7 @@ StringHashTable::StringHashTable(std::size_t size) {
 
     table = new StringNode*[TABLE_SIZE]();
 
-    for(int i = 0; i < TABLE_SIZE; i++)
+    for(std::size_t i = 0; i < TABLE_SIZE; i++)
     {
         table[i] = nullptr;
     }
@@ -27,7 +27,6 @@ std::size_t StringHashTable::hash(std::string key) {
 void StringHashTable::add(std::string data, std::string key) {
     std::size_t index = StringHashTable::hash(key);
     StringNode* entry = table[index];
-    StringNode* previousNode = nullptr;
     StringNode* newNode = new StringNode(data, key);
 
     // if node at index is empty
@@ -91,10 +90,8 @@ StringNode *StringHashTable::search(std::string key) {
             entry = entry->getNext();
         }
     }
-    if (!found)
-    {
-        return nullptr;
-    }
+    // if not found
+    return nullptr;
 }
 
 StringHashTable::~StringHashTable() {

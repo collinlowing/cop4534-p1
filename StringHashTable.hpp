@@ -20,7 +20,7 @@
 
 class StringHashTable {
 private:
-    std::size_t TABLE_SIZE;
+    const std::size_t TABLE_SIZE;
     StringNode **table;
 public:
     StringHashTable(std::size_t size);

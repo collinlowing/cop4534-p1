@@ -10,6 +10,7 @@ void NameRunner::start() {
     std::vector<std::string> output;
     int multiplier = 1;
 
+    // generate random passwords
     for (auto name : names) {
         int randomSeed = time(0) * multiplier;
 
